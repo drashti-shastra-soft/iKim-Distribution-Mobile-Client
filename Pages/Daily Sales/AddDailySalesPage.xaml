@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    x:Class="i_KimMobileClient.Pages.Daily_Sales.AddDailySalesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    NavigationPage.HasNavigationBar="False">
+    <Grid Background="WhiteSmoke" RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <Grid
+            Grid.Row="0"
+            Padding="15"
+            BackgroundColor="{StaticResource AppPrimary}"
+            ColumnDefinitions="Auto,*,Auto">
+            <Border
+                x:Name="BdrBtnBack"
+                Grid.Column="0"
+                Padding="10"
+                Background="White"
+                HeightRequest="40"
+                StrokeShape="RoundRectangle 12"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                WidthRequest="40">
+                <Image
+                    x:Name="BtnBack"
+                    HeightRequest="20"
+                    HorizontalOptions="Center"
+                    Source="back"
+                    VerticalOptions="Center"
+                    WidthRequest="22">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                    </Image.Behaviors>
+                </Image>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <VerticalStackLayout
+                Grid.Column="1"
+                Margin="14,0,0,0"
+                VerticalOptions="Center">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Add Daily Sales"
+                    TextColor="White" />
+                <Label
+                    x:Name="lblSubTitle"
+                    FontSize="13"
+                    Text="Enter Today's Sales Collection"
+                    TextColor="#FFE0C0" />
+            </VerticalStackLayout>
+
+            <!--<Border
+                Grid.Column="2"
+                Padding="10"
+                Background="White"
+                HeightRequest="40"
+                StrokeShape="RoundRectangle 12"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                WidthRequest="40">
+                <Image
+                    x:Name="BtnAdd"
+                    HeightRequest="15"
+                    HorizontalOptions="Center"
+                     Source="icon_plus"
+                    VerticalOptions="Center"
+                    WidthRequest="15">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                    </Image.Behaviors>
+                </Image>
+            </Border>-->
+
+        </Grid>
+
+        <!--  Scrollable Content  -->
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="15,10" Spacing="15">
+                <StackLayout Spacing="5">
+                    <Label
+                        FontSize="14"
+                        Style="{StaticResource lblBold2}"
+                        Text="Date"
+                        TextColor="#000000" />
+
+                    <Border 
+                        Padding="0,0,10,0"
+                        Stroke="{StaticResource AppGray}"
+                        StrokeThickness="0.5"
+                        Style="{StaticResource ExtBorder}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <ext:BorderlessDatePicker
+                                 x:Name="dpDate"
+                                 Margin="8,0,0,0"
+                                 FontFamily="segoeuiSemibold"
+                                 FontSize="14"
+                                 Format="dd/MM/yyyy (dddd)"
+                                 TextColor="#757575"
+                                 IsEnabled="False"/>
+                            <Image
+                                Grid.Column="1"
+                                Source="icon_date"
+                                WidthRequest="20" >
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#FF6B00" />
+                                </Image.Behaviors>
+                            </Image>
+                        </Grid>
+                    </Border>
+                </StackLayout>
+
+                <StackLayout Spacing="5">
+                    <Label
+                         FontSize="14"
+                         Style="{StaticResource lblBold2}"
+                         Text="Cash Collection"
+                         TextColor="#000000" />
+
+                    <Border 
+                         Padding="0,0,10,0"
+                         Stroke="{StaticResource AppGray}"
+                         StrokeThickness="0.5"
+                         Style="{StaticResource ExtBorder}">
+                        <ext:BorderlessEntry
+                            x:Name="txtCashColl"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Justify"
+                            Keyboard="Numeric"
+                            Placeholder="Enter Cash Amount"
+                            ReturnType="Next"
+                            Style="{StaticResource extEntry}" />
+                    </Border>
+                </StackLayout>
+
+                <StackLayout Spacing="5">
+                    <Label
+                        FontSize="14"
+                        Style="{StaticResource lblBold2}"
+                        Text="Online Collection"
+                        TextColor="#000000" />
+
+                    <Border 
+                        Padding="0,0,10,0"
+                        Stroke="{StaticResource AppGray}"
+                        StrokeThickness="0.5"
+                        Style="{StaticResource ExtBorder}">
+                        <ext:BorderlessEntry
+                            x:Name="txtOnlineColl"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Justify"
+                            Keyboard="Numeric"
+                            Placeholder="Enter Cash Amount"
+                            ReturnType="Done"
+                            Style="{StaticResource extEntry}" />
+                    </Border>
+                </StackLayout>
+
+                <!-- Summary Card -->
+
+                <!--<Border
+                     Background="#fef8f2"
+                     Stroke="#EEEEEE"
+                     StrokeShape="RoundRectangle 10"
+                     Padding="15">
+                    <Border.Shadow>
+                        <Shadow
+                            Brush="Black"
+                            Opacity="0.2"
+                            Radius="10"
+                            Offset="0,2" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="5">
+
+                        <Label 
+                            Text="Sales Summary"
+                            Style="{StaticResource lblBold2}"
+                            FontSize="14"/>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label 
+                                Text="Cash"
+                                Style="{StaticResource lblsemiBold}"
+                                FontSize="12"/>
+                            <Label 
+                                Grid.Column="1"
+                                Text="₹12000.00"
+                                FontSize="12"
+                                TextColor="{StaticResource AppOrange}"
+                                Style="{StaticResource lblBold2}"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label 
+                                Text="Online" 
+                                Style="{StaticResource lblsemiBold}"
+                                FontSize="12"/>
+                            <Label 
+                                Grid.Column="1"
+                                Text="₹4000.00"
+                                FontSize="12"
+                                TextColor="{StaticResource AppOrange}"
+                                Style="{StaticResource lblBold2}"/>
+                        </Grid>
+
+                        <BoxView 
+                            Margin="0,5"
+                            HeightRequest="1"
+                            BackgroundColor="#fbc9a2"/>
+
+                        <Grid ColumnDefinitions="*,Auto">
+
+                            <Label 
+                                Text="Total Sales"
+                                Style="{StaticResource lblBold2}"
+                                FontSize="16"/>
+
+                            <Label 
+                                Grid.Column="1"
+                                Text="₹16,000.00"
+                                FontSize="16"
+                                TextColor="{StaticResource AppOrange}"
+                                Style="{StaticResource lblBold2}"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>-->
+
+                <!-- Notes -->
+
+                <!--<HorizontalStackLayout 
+                    Spacing="5">
+                    <Label 
+                        Text="Notes"
+                        FontSize="14"
+                        Style="{StaticResource lblBold2}"/>
+
+                    <Label 
+                        Text="(Optional)"
+                        TextColor="#3A7DFF"
+                        FontSize="14"
+                        Style="{StaticResource lblBold2}"/>
+                </HorizontalStackLayout>
+
+                <Border
+                     Padding="5,0"
+                     Background="White"
+                     Stroke="LightGray"
+                     StrokeShape="{RoundRectangle CornerRadius=10}"
+                     StrokeThickness="0.5">
+                    <Border.Shadow>
+                        <Shadow
+                            Brush="#80000000"
+                            Opacity="0.1"
+                            Radius="3"
+                            Offset="1,1" />
+                    </Border.Shadow>
+                    <ext:BorderlessEditor
+                         x:Name="EntryNotes"
+                         AutoSize="TextChanges"
+                         Background="Transparent"
+                         FontSize="14"
+                         MaximumHeightRequest="100"
+                         MinimumHeightRequest="80"
+                         Placeholder="Enter notes here..."
+                         PlaceholderColor="#BDBDBD"
+                         TextColor="#1A1A1A" />
+                </Border>-->
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--  Submit Button  -->
+        <Grid
+             Grid.Row="2"
+             Padding="15"
+             BackgroundColor="#F7F8FA">
+            <Border
+                 x:Name="BtnPlaceOrder"
+                 Background="#FF6B00"
+                 HeightRequest="56"
+                 StrokeShape="RoundRectangle 16"
+                 StrokeThickness="0">
+                <Border.Shadow>
+                    <Shadow
+                         Brush="#FF6B00"
+                         Opacity="0.35"
+                         Radius="12"
+                         Offset="0,4" />
+                </Border.Shadow>
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Label
+                         x:Name="BtnLabel"
+                         FontAttributes="Bold"
+                         FontSize="16"
+                         Text="Submit"
+                         TextColor="White"
+                         VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddDailySalesTapped" />
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+
+        <ext:CustomLoaderView
+             x:Name="loaderView"
+             Grid.RowSpan="2"
+             IsVisible="False" />
+    </Grid>
+
+</ContentPage>

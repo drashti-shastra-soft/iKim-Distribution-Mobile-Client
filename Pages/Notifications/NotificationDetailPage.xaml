@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    x:Class="i_KimMobileClient.Pages.Notifications.NotificationDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    NavigationPage.HasNavigationBar="False">
+    <Grid Background="WhiteSmoke" RowDefinitions="Auto,*,Auto">
+        <!--  Header  -->
+        <Grid
+     Grid.Row="0"
+     Padding="15"
+     BackgroundColor="{StaticResource AppPrimary}"
+     ColumnDefinitions="Auto,*,Auto">
+
+            <Border
+         Grid.Column="0"
+         Padding="10"
+         Background="White"
+         HeightRequest="40"
+         StrokeShape="RoundRectangle 12"
+         StrokeThickness="0"
+         VerticalOptions="Center"
+         WidthRequest="40">
+                <Image
+             HeightRequest="22"
+             HorizontalOptions="Center"
+             Source="back"
+             VerticalOptions="Center"
+             WidthRequest="22">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                    </Image.Behaviors>
+                </Image>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BackButton_Clicked" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <VerticalStackLayout
+                 Grid.Column="1"
+                 Margin="14,0,0,0"
+                 VerticalOptions="Center">
+                <Label
+                     x:Name="LblTitle"
+                     FontAttributes="Bold"
+                     FontSize="20"
+                     Text="{Binding TitleText}"
+                     TextColor="White" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!--  Scrollable Content  -->
+        <VerticalStackLayout 
+            Grid.Row="1"
+            VerticalOptions="Start"
+            Padding="15,10"
+            Spacing="15">
+
+
+            <Label
+                Text="Description:"
+                FontSize="18"
+                TextColor="#333333"
+                Style="{StaticResource lblBold2}" />
+            <Border
+                Padding="15"
+                Background="White"
+                Stroke="#EFEFEF"
+                StrokeShape="RoundRectangle 16"
+                StrokeThickness="1">
+
+                <Border.Shadow>
+                    <Shadow
+                        Brush="Black"
+                        Opacity="0.05"
+                        Radius="8"
+                        Offset="0,2" />
+                </Border.Shadow>
+
+                <VerticalStackLayout Spacing="8">
+
+                    <Label
+                        x:Name="lblDescription"
+                       Text="{Binding DescriptionText}"
+                        FontSize="14"
+                        TextColor="#555555"
+                        Style="{StaticResource lblsemiBold}"
+                        LineBreakMode="WordWrap"/>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+        <ext:CustomLoaderView
+        x:Name="loaderView"
+        Grid.RowSpan="2"
+        IsVisible="False" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="i_KimMobileClient.Views.DeliveryView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    NavigationPage.HasNavigationBar="False">
+    <RefreshView
+        x:Name="OrderRefreshView"
+        Grid.Row="1"
+        Command="{Binding RefreshCommand}"
+        RefreshColor="#FF6B00"
+        Refreshing="OnRefreshing">
+        <Grid RowDefinitions="Auto,*">
+
+            <!--  Header  -->
+            <Grid
+                Grid.Row="0"
+                Padding="16,10,16,14"
+                BackgroundColor="{StaticResource AppPrimary}"
+                RowDefinitions="Auto,Auto">
+
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+
+                    <Border
+                        Grid.Column="0"
+                        Background="White"
+                        HeightRequest="42"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        VerticalOptions="Center"
+                        WidthRequest="42">
+                        <Image
+                            HeightRequest="30"
+                            HorizontalOptions="Center"
+                            Source="icon_delivery.svg"
+                            VerticalOptions="Center"
+                            WidthRequest="30">
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray950}" />
+                            </Image.Behaviors>
+                        </Image>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBackTapped" />
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Margin="14,0"
+                        VerticalOptions="Center">
+                        <Label
+                            FontSize="20"
+                            Style="{StaticResource lblBold}"
+                            Text="Party Orders"
+                            TextColor="White" />
+                        <Label
+                            x:Name="LblSubtitle"
+                            FontSize="12"
+                            Style="{StaticResource lblRegular}"
+                            Text="All Party Orders"
+                            TextColor="#FFE0C0" />
+                    </VerticalStackLayout>
+
+                    <!--<Border
+                        Grid.Column="2"
+                        Background="White"
+                        HeightRequest="42"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        VerticalOptions="Center"
+                        WidthRequest="42">
+                        <Image
+                            HeightRequest="20"
+                            HorizontalOptions="Center"
+                            Source="icon_filter.svg"
+                            VerticalOptions="Center"
+                            WidthRequest="20">
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                            </Image.Behaviors>
+                        </Image>
+                    </Border>-->
+                </Grid>
+
+                <!--  Search Bar  -->
+                <Border
+                    Grid.Row="1"
+                    Margin="0,10,0,0"
+                    Padding="12,0"
+                    Background="White"
+                    HeightRequest="44"
+                    StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Image
+                            Grid.Column="0"
+                            HeightRequest="18"
+                            Source="icon_search.svg"
+                            VerticalOptions="Center"
+                            WidthRequest="18">
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="#9E9E9E" />
+                            </Image.Behaviors>
+                        </Image>
+                        <ext:BorderlessEntry
+                            x:Name="EntrySearch"
+                            Grid.Column="1"
+                            Margin="8,0,0,0"
+                            BackgroundColor="Transparent"
+                            FontSize="13"
+                            Placeholder="Search by Name or Store..."
+                            PlaceholderColor="#BDBDBD"
+                            TextChanged="OnSearchTextChanged"
+                            TextColor="#1A1A1A"
+                            VerticalOptions="Center" />
+
+                        <!--  Clear Button — visible only when text entered  -->
+                        <Border
+                            x:Name="BtnClearSearch"
+                            Grid.Column="2"
+                            BackgroundColor="#F5F5F5"
+                            HeightRequest="26"
+                            HorizontalOptions="End"
+                            IsVisible="False"
+                            StrokeShape="RoundRectangle 13"
+                            StrokeThickness="0"
+                            VerticalOptions="Center"
+                            WidthRequest="26">
+                            <Image
+                                HeightRequest="14"
+                                HorizontalOptions="Center"
+                                Source="icon_close"
+                                VerticalOptions="Center"
+                                WidthRequest="14">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#9E9E9E" />
+                                </Image.Behaviors>
+                            </Image>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnClearSearch" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!--  Orders List  -->
+            <CollectionView
+                x:Name="clsPartyOrderList"
+                Grid.Row="1"
+                Background="#F7F8FA"
+                VerticalScrollBarVisibility="Never">
+                <CollectionView.Header>
+                    <BoxView BackgroundColor="Transparent" HeightRequest="10" />
+                </CollectionView.Header>
+                <CollectionView.Footer>
+                    <BoxView BackgroundColor="Transparent" HeightRequest="50" />
+                </CollectionView.Footer>
+
+                <!--  Empty State  -->
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout
+                        Padding="40,60"
+                        HorizontalOptions="Center"
+                        Spacing="12"
+                        VerticalOptions="Center">
+                        <Border
+                            Background="#FFF3E0"
+                            HeightRequest="72"
+                            HorizontalOptions="Center"
+                            StrokeShape="RoundRectangle 36"
+                            StrokeThickness="0"
+                            WidthRequest="72">
+                            <Image
+                                HeightRequest="36"
+                                HorizontalOptions="Center"
+                                Source="icon_cart"
+                                VerticalOptions="Center"
+                                WidthRequest="36">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#FF6B00" />
+                                </Image.Behaviors>
+                            </Image>
+                        </Border>
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource lblsemiBold}"
+                            Text="No Party Orders"
+                            TextColor="#1A1A1A" />
+                        <!--<Label
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            Text="No orders found"
+                            TextColor="#9E9E9E" />-->
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="16,0,16,10"
+                            Padding="0"
+                            Background="White"
+                            Stroke="#EFEFEF"
+                            StrokeShape="RoundRectangle 16"
+                            StrokeThickness="1">
+                            <Border.Shadow>
+                                <Shadow
+                                    Brush="Black"
+                                    Opacity="0.05"
+                                    Radius="8"
+                                    Offset="0,2" />
+                            </Border.Shadow>
+
+                            <VerticalStackLayout Spacing="0">
+
+                                <!--  Top Row — Avatar + Info + Total  -->
+                                <Grid Padding="14,12,14,10" ColumnDefinitions="Auto,*,Auto">
+
+                                    <!--  Avatar Initials  -->
+                                    <Border
+                                        Grid.Column="0"
+                                        Margin="0"
+                                        Padding="10"
+                                        Background="#FFF3E0"
+                                        StrokeShape="RoundRectangle 12"
+                                        StrokeThickness="0"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontSize="15"
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource lblsemiBold}"
+                                            Text="{Binding Initials}"
+                                            TextColor="#854F0B"
+                                            VerticalOptions="Center" />
+                                    </Border>
+
+                                    <!--  Name + Store + Mobile  -->
+                                    <VerticalStackLayout
+                                        Grid.Column="1"
+                                        Margin="10,0"
+                                        Spacing="3"
+                                        VerticalOptions="Center">
+
+                                        <Label
+                                            FontSize="15"
+                                            LineBreakMode="TailTruncation"
+                                            Style="{StaticResource lblsemiBold}"
+                                            Text="{Binding Name}"
+                                            TextColor="#1A1A1A" />
+
+
+                                        <HorizontalStackLayout Spacing="4">
+                                            <Image
+                                                HeightRequest="13"
+                                                Source="icon_address"
+                                                VerticalOptions="Center"
+                                                WidthRequest="13">
+                                                <Image.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="#FF6B00" />
+                                                </Image.Behaviors>
+                                            </Image>
+                                            <Label
+                                                FontSize="12"
+                                                Style="{StaticResource lblsemiBold}"
+                                                Text="{Binding MobileNumber}"
+                                                TextColor="#FF6B00" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <!--  Total Amount  -->
+                                    <Border
+                                        Grid.Column="2"
+                                        Padding="10,8"
+                                        Background="#FF6B00"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="0"
+                                        VerticalOptions="Start">
+                                        <VerticalStackLayout Spacing="1">
+                                            <Label
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="Total"
+                                                Style="{StaticResource lblBold}"
+                                                TextColor="#FFE0C0" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="14"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource lblBold}"
+                                                Text="{Binding TotalAmountFormatted}"
+                                                TextColor="White" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </Grid>
+
+                                <!--  Divider  -->
+                                <BoxView
+                                    Margin="14,0"
+                                    BackgroundColor="#F5F5F5"
+                                    HeightRequest="1" />
+
+                                <!--  Location + DateTime  -->
+                                <VerticalStackLayout Padding="14,10" Spacing="6">
+
+                                    <!--<HorizontalStackLayout Spacing="8">
+                                        <Image
+                                            HeightRequest="15"
+                                            Source="icon_location.svg"
+                                            VerticalOptions="Center"
+                                            WidthRequest="15">
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="#FF6B00" />
+                                            </Image.Behaviors>
+                                        </Image>
+                                        <Label
+                                            FontSize="12"
+                                            LineBreakMode="TailTruncation"
+                                            Style="{StaticResource lblRegular}"
+                                            Text="{Binding DeliveryLocation}"
+                                            TextColor="#555"
+                                            VerticalOptions="Center" />
+                                    </HorizontalStackLayout>-->
+
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                        <Image
+                                            Grid.Column="0"
+                                            HeightRequest="15"
+                                            Source="icon_location.svg"
+                                            VerticalOptions="Center"
+                                            WidthRequest="15">
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="#FF6B00" />
+                                            </Image.Behaviors>
+                                        </Image>
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="12"
+                                            LineBreakMode="TailTruncation"
+                                            MaxLines="2"
+                                            Style="{StaticResource lblRegular}"
+                                            Text="{Binding DeliveryLocation}"
+                                            TextColor="#555"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+
+                                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                                        <HorizontalStackLayout Grid.Column="0" Spacing="8">
+                                            <Image
+                                                HeightRequest="15"
+                                                Source="icon_calender"
+                                                VerticalOptions="Center"
+                                                WidthRequest="15">
+                                                <Image.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="#FF6B00" />
+                                                </Image.Behaviors>
+                                            </Image>
+                                            <Label
+                                                FontSize="12"
+                                                Style="{StaticResource lblRegular}"
+                                                Text="{Binding DeliveryDateTimeFormatted}"
+                                                TextColor="#555"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+
+                                        <Border
+                                            Grid.Column="1"
+                                            Padding="10,6"
+                                            Background="#FFF3E0"
+                                            HorizontalOptions="End"
+                                            StrokeShape="RoundRectangle 8"
+                                            StrokeThickness="0">
+                                            <HorizontalStackLayout Spacing="5">
+                                                <Image
+                                                    HeightRequest="14"
+                                                    Source="icon_unhide.svg"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="14">
+                                                    <Image.Behaviors>
+                                                        <toolkit:IconTintColorBehavior TintColor="#854F0B" />
+                                                    </Image.Behaviors>
+                                                </Image>
+                                                <!--<Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="12"
+                                                    Style="{StaticResource lblsemiBold}"
+                                                    Text="View"
+                                                    TextColor="#854F0B"
+                                                    VerticalOptions="Center" />-->
+                                            </HorizontalStackLayout>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="{Binding .}"  NumberOfTapsRequired="1" Tapped="OnViewTapped" />
+                                            </Border.GestureRecognizers>
+                                        </Border>
+
+                                        <Border
+                                            Grid.Column="2"
+                                            Padding="5"
+                                            Background="#FED3D7"
+                                            HorizontalOptions="End"
+                                            IsEnabled="{Binding IsEditable}"
+                                            IsVisible="{Binding DeleteIconVisibility}">
+                                            <Image
+                                                Aspect="AspectFit"
+                                                HeightRequest="15"
+                                                Source="icon_delete"
+                                                Style="{StaticResource ImgSmall}"
+                                                WidthRequest="15" />
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BdrDelete_Tapped" />
+                                            </Border.GestureRecognizers>
+                                        </Border>
+                                    </Grid>
+                                </VerticalStackLayout>
+
+                                <!--  Divider  -->
+                                <BoxView
+                                    Margin="14,0"
+                                    BackgroundColor="#F5F5F5"
+                                    HeightRequest="1" />
+
+                                <!--  Chips Row — Cups Spoons Glass Waiter + View  -->
+                                <Grid
+                                    Padding="14,10,14,12"
+                                    ColumnDefinitions="Auto,Auto,Auto,Auto"
+                                    ColumnSpacing="5">
+
+                                    <!--  Cups  -->
+                                    <Border
+                                        Grid.Column="0"
+                                        Margin="0,0,5,0"
+                                        Padding="8,4"
+                                        Background="#E6F1FB"
+                                        StrokeShape="RoundRectangle 6"
+                                        StrokeThickness="0">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Image
+                                                HeightRequest="13"
+                                                Source="icon_cup.svg"
+                                                VerticalOptions="Center"
+                                                WidthRequest="13">
+                                                <Image.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="#0C447C" />
+                                                </Image.Behaviors>
+                                            </Image>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="11"
+                                                Style="{StaticResource lblRegular}"
+                                                Text="{Binding NumOfCups}"
+                                                TextColor="#0C447C"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+
+                                    <!--  Spoons  -->
+                                    <Border
+                                        Grid.Column="1"
+                                        Margin="0,0,5,0"
+                                        Padding="8,4"
+                                        Background="#FAEEDA"
+                                        StrokeShape="RoundRectangle 6"
+                                        StrokeThickness="0">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Image
+                                                HeightRequest="13"
+                                                Source="icon_spoon.svg"
+                                                VerticalOptions="Center"
+                                                WidthRequest="13">
+                                                <Image.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="#633806" />
+                                                </Image.Behaviors>
+                                            </Image>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="11"
+                                                Style="{StaticResource lblRegular}"
+                                                Text="{Binding NumOfSpoons}"
+                                                TextColor="#633806"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+
+                                    <!--  Glass  -->
+                                    <Border
+                                        Grid.Column="2"
+                                        Margin="0,0,5,0"
+                                        Padding="8,4"
+                                        Background="#EAF3DE"
+                                        StrokeShape="RoundRectangle 6"
+                                        StrokeThickness="0">
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Image
+                                                HeightRequest="13"
+                                                Source="icon_glass.svg"
+                                                VerticalOptions="Center"
+                                                WidthRequest="13">
+                                                <Image.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="#27500A" />
+                                                </Image.Behaviors>
+                                            </Image>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="11"
+                                                Style="{StaticResource lblRegular}"
+                                                Text="{Binding NumOfGlass}"
+                                                TextColor="#27500A"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+
+                                    <!--  With Waiter  -->
+
+                                    <Border
+                                        Grid.Column="3"
+                                        Padding="5,4"
+                                        Background="{Binding WaiterBgColor}"
+                                        StrokeShape="RoundRectangle 6"
+                                        StrokeThickness="0">
+                                        <HorizontalStackLayout HorizontalOptions="EndAndExpand" Spacing="5">
+                                            <Image
+                                                HeightRequest="14"
+                                                Source="icon_profile"
+                                                VerticalOptions="Center"
+                                                WidthRequest="14">
+                                                <Image.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="#854F0B" />
+                                                </Image.Behaviors>
+                                            </Image>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="11"
+                                                Style="{StaticResource lblRegular}"
+                                                Text="{Binding WaiterLabel}"
+                                                TextColor="{Binding WaiterTextColor}"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                </Grid>
+
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" CommandParameter="{Binding .}" Tapped="OrderItem_Tapped" />
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+
+            </CollectionView>
+
+
+            <Border
+                Grid.Row="1"
+                Margin="0,0,15,15"
+                Background="{StaticResource AppPrimary}"
+                HeightRequest="50"
+                HorizontalOptions="End"
+                StrokeShape="{RoundRectangle CornerRadius=25}"
+                VerticalOptions="End"
+                WidthRequest="50">
+                <Image
+                    Aspect="AspectFit"
+                    HeightRequest="20"
+                    Source="icon_plus_white"
+                    WidthRequest="20" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BdrAddPartyOrder_Tapped" />
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+    </RefreshView>
+</ContentView>

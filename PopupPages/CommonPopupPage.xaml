@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="i_KimMobileClient.PopupPages.CommonPopupPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    CloseWhenBackgroundIsClicked="False"
+    Background="#80000000">
+    <Grid
+        Margin="15,0"
+        Background="Transparent"
+        VerticalOptions="Center">
+        <Border
+            Margin="0"
+            Padding="0"
+            Background="White"
+            StrokeShape="{RoundRectangle CornerRadius=10}">
+            <Border.Shadow>
+                <Shadow
+                    Brush="Black"
+                    Opacity="0.05"
+                    Radius="5"
+                    Offset="0,2" />
+            </Border.Shadow>
+            <Grid
+                Margin="0"
+                Padding="0"
+                RowDefinitions="Auto,150">
+
+                <Grid
+                    Padding="10"
+                    Background="{StaticResource AppPrimary}"
+                    ColumnDefinitions="*,Auto">
+                    <Label
+                        x:Name="lblTitle"
+                        Grid.Column="0"
+                        FontSize="18"
+                        Style="{StaticResource lblBold2}"
+                        Text="Alert"
+                        TextColor="White"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+
+                    <!--<Image
+                        x:Name="btnClose"
+                        Grid.Column="1"
+                        HeightRequest="30"
+                        Rotation="45"
+                        Source="icon_plus_white"
+                        Style="{StaticResource ImgSmall}"
+                        WidthRequest="30">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BtnClose_Cliked" />
+                        </Image.GestureRecognizers>
+                    </Image>-->
+                </Grid>
+
+                <Grid
+                    Grid.Row="1"
+                    Padding="15,15,15,10"
+                    RowDefinitions="*,Auto"
+                    RowSpacing="15">
+                    <Label
+                        x:Name="lblMessage"
+                        Grid.Row="0"
+                        FontSize="18"
+                        Style="{StaticResource lblRegular}"
+                        Text=""
+                        TextColor="{StaticResource AppBlack}"
+                        VerticalTextAlignment="Center" />
+
+                    <Grid
+                        Grid.Row="1"
+                        ColumnDefinitions="*,*"
+                        ColumnSpacing="15">
+                        <Button
+                            Grid.Column="0"
+                            ClassId="Yes"
+                            Clicked="BtnAction"
+                            Style="{StaticResource BtnPrimary}"
+                            Text="Yes" />
+                        <Button
+                            Grid.Column="1"
+                            Background="#6c757d"
+                            ClassId="No"
+                            Clicked="BtnAction"
+                            Style="{StaticResource BtnPrimary}"
+                            Text="No" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</mopups:PopupPage>

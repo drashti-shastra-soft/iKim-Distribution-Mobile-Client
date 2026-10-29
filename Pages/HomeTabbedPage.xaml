@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="i_KimMobileClient.Pages.HomeTabbedPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Background="White"
+    NavigationPage.HasNavigationBar="False">
+    <Grid RowDefinitions="*,auto">
+
+        <Grid x:Name="GRDMainView" Grid.Row="0" />
+
+        <Border
+            Grid.Row="1"
+            Margin="0"
+            Padding="0"
+            Background="Transparent"
+            BackgroundColor="White"
+            StrokeShape="{RoundRectangle CornerRadius='10,10,0,0'}"
+            StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow
+                    Brush="White"
+                    Opacity="0.08"
+                    Radius="10"
+                    Offset="0,-3" />
+            </Border.Shadow>
+
+            <Grid HeightRequest="75">
+
+                <GraphicsView
+                    x:Name="NavBarGraphics"
+                    Margin="0,-15,0,0"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill" />
+
+                <!--  Tab Items  -->
+                <Grid
+                    Padding="0,20,0,0"
+                    ColumnDefinitions="*,*,*,*,*"
+                    VerticalOptions="Fill">
+
+                    <!--  Home  -->
+                    <VerticalStackLayout
+                        Grid.Column="0"
+                        ClassId="Home"
+                        HorizontalOptions="Center"
+                        Spacing="2">
+                        <Ellipse
+                            x:Name="DotHome"
+                            Margin="0,-18,0,0"
+                            Fill="#FF6B00"
+                            HeightRequest="10"
+                            HorizontalOptions="Center"
+                            WidthRequest="10" />
+                        <Image
+                            x:Name="IconHome"
+                            HeightRequest="24"
+                            HorizontalOptions="Center"
+                            Source="home_black"
+                            WidthRequest="24" />
+                        <Label
+                            x:Name="LabelHome"
+                            FontSize="11"
+                            HorizontalOptions="Center"
+                            Text="Home"
+                            TextColor="#FF6B00" />
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTabTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                    </VerticalStackLayout>
+
+                    <!--  Orders  -->
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        ClassId="Orders"
+                        HorizontalOptions="Center"
+                        Spacing="2">
+                        <Ellipse
+                            x:Name="DotOrders"
+                            Margin="0,-18,0,0"
+                            Fill="Transparent"
+                            HeightRequest="10"
+                            HorizontalOptions="Center"
+                            WidthRequest="10" />
+                        <Image
+                            x:Name="IconOrders"
+                            HeightRequest="24"
+                            HorizontalOptions="Center"
+                            Source="icon_orders_black"
+                            WidthRequest="24" />
+                        <Label
+                            x:Name="LabelOrders"
+                            FontSize="11"
+                            HorizontalOptions="Center"
+                            Text="Orders"
+                            TextColor="#9E9E9E" />
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTabTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                    </VerticalStackLayout>
+
+                    <!--  Add — Empty placeholder to keep spacing  -->
+                    <VerticalStackLayout
+                        Grid.Column="2"
+                        HorizontalOptions="Center"
+                        Spacing="2">
+                        <Label
+                            x:Name="LabelAdd"
+                            Margin="0,20,0,0"
+                            FontSize="11"
+                            HorizontalOptions="Center"
+                            Text="Add"
+                            TextColor="#9E9E9E" />
+                    </VerticalStackLayout>
+
+                    <!--  Delivery  -->
+                    <VerticalStackLayout
+                        Grid.Column="3"
+                        ClassId="Delivery"
+                        HorizontalOptions="Center"
+                        Spacing="2">
+                        <Ellipse
+                            x:Name="DotDelivery"
+                            Margin="0,-18,0,0"
+                            Fill="Transparent"
+                            HeightRequest="10"
+                            HorizontalOptions="Center"
+                            WidthRequest="10" />
+                        <Image
+                            x:Name="IconDelivery"
+                            HeightRequest="24"
+                            HorizontalOptions="Center"
+                            Source="icon_delivery_black.svg"
+                            WidthRequest="24" />
+                        <Label
+                            x:Name="LabelDelivery"
+                            FontSize="11"
+                            HorizontalOptions="Center"
+                            Text="Party Order"
+                            TextColor="#9E9E9E" />
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTabTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                    </VerticalStackLayout>
+
+                    <!--  Profile  -->
+                    <VerticalStackLayout
+                        Grid.Column="4"
+                        ClassId="Profile"
+                        HorizontalOptions="Center"
+                        Spacing="2">
+                        <Ellipse
+                            x:Name="DotProfile"
+                            Margin="0,-18,0,0"
+                            Fill="Transparent"
+                            HeightRequest="10"
+                            HorizontalOptions="Center"
+                            WidthRequest="10" />
+                        <Image
+                            x:Name="IconProfile"
+                            HeightRequest="24"
+                            HorizontalOptions="Center"
+                            Source="icon_profile_black.svg"
+                            WidthRequest="24" />
+                        <Label
+                            x:Name="LabelProfile"
+                            FontSize="11"
+                            HorizontalOptions="Center"
+                            Text="Profile"
+                            TextColor="#9E9E9E" />
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTabTapped" />
+                        </VerticalStackLayout.GestureRecognizers>
+                    </VerticalStackLayout>
+
+                </Grid>
+
+                <!--  Floating Add Button — overlays on top of everything  -->
+                <Border
+                    x:Name="BtnAdd"
+                    Margin="0,0,0,0"
+                    Background="#FF6B00"
+                    ClassId="Add"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    StrokeShape="{RoundRectangle CornerRadius=28}"
+                    StrokeThickness="0"
+                    VerticalOptions="Start"
+                    WidthRequest="40">
+                    <Border.Shadow>
+                        <Shadow
+                            Brush="#FF6B00"
+                            Opacity="0.4"
+                            Radius="10"
+                            Offset="0,4" />
+                    </Border.Shadow>
+                    <Image
+                        x:Name="IconAdd"
+                        HeightRequest="22"
+                        HorizontalOptions="Center"
+                        Source="icon_plus_white.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="22" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAddTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+            </Grid>
+        </Border>
+
+        <ext:CustomLoaderView
+            x:Name="loaderView"
+            Grid.RowSpan="2"
+            IsVisible="False" />
+    </Grid>
+</ContentPage>

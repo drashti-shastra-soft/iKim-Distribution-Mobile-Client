@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    x:Class="i_KimMobileClient.Pages.Notifications.NotificationListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:conv="clr-namespace:i_KimMobileClient.Converter"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Background="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <RefreshView
+        x:Name="NotificationRefreshView"
+        Grid.Row="1"
+        Command="{Binding RefreshCommand}"
+        RefreshColor="#FF6B00"
+        Refreshing="OnRefreshing">
+        <Grid RowDefinitions="Auto,*">
+            <!--Header-->
+            <Grid
+                Grid.Row="0"
+                Padding="16,10,16,14"
+                BackgroundColor="{StaticResource AppPrimary}"
+                RowDefinitions="Auto,Auto">
+
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+
+                    <Border
+                        Grid.Column="0"
+                        Background="White"
+                        HeightRequest="38"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        VerticalOptions="Center"
+                        WidthRequest="38">
+                        <Image
+                            HeightRequest="20"
+                            HorizontalOptions="Center"
+                            Source="back"
+                            VerticalOptions="Center"
+                            WidthRequest="20">
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray950}" />
+                            </Image.Behaviors>
+                        </Image>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBackTapped" />
+                        </Border.GestureRecognizers>
+                    </Border>
+
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Margin="14,0"
+                        VerticalOptions="Center">
+                        <Label
+                            x:Name="lblTitle"
+                            FontSize="20"
+                            Style="{StaticResource lblBold}"
+                            Text="Notifications"
+                            TextColor="White" />
+                        <Label
+                            FontSize="13"
+                            Text="Stay Updated With Your Business"
+                            TextColor="#FFE0C0" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+
+            <!--Notification List-->
+
+            <CollectionView
+                    Grid.Row="1"
+                    x:Name="clsNotificationItemList"
+                    Background="White"
+                    VerticalScrollBarVisibility="Never">
+                <CollectionView.Header>
+                    <BoxView BackgroundColor="Transparent" HeightRequest="10" />
+                </CollectionView.Header>
+                <CollectionView.Footer>
+                    <BoxView BackgroundColor="Transparent" HeightRequest="50" />
+                </CollectionView.Footer>
+                <!--Empty State-->
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout
+                        Padding="40,60"
+                        HorizontalOptions="Center"
+                        Spacing="12"
+                        VerticalOptions="Center">
+                        <Border
+                            Background="#FFF3E0"
+                            HeightRequest="60"
+                            HorizontalOptions="Center"
+                            StrokeShape="RoundRectangle 36"
+                            StrokeThickness="0"
+                            WidthRequest="60">
+                            <Image
+                                Aspect="AspectFit"
+                                HeightRequest="35"
+                                HorizontalOptions="Center"
+                                Source="icon_bell.png"
+                                VerticalOptions="Center"
+                                WidthRequest="35" >
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="{StaticResource AppPrimary}"/>
+                                </Image.Behaviors>
+                            </Image>
+                        </Border>
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource lblsemiBold}"
+                            Text="No Notifications"
+                            TextColor="#1A1A1A" />
+
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Padding="20,0" Spacing="0">
+                            <Label
+                                Padding="0,10,0,0"
+                                Text="{Binding HeaderText}"
+                                IsVisible="{Binding ShowHeader}"
+                                FontSize="16"
+                                Style="{StaticResource lblBold2}" />
+                            <Grid
+                                ColumnDefinitions="Auto,*,Auto">
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnNotificationTapped" />
+                                </Grid.GestureRecognizers>
+                                <!--Item Image-->
+                                <Border
+                                    Background="{Binding Index, Converter={conv:IndexToColorConverter}}"
+                                    HeightRequest="45"
+                                    StrokeShape="RoundRectangle 30"
+                                    WidthRequest="45">
+                                    <Image
+                                        Margin="0,0,0,0"
+                                        Aspect="AspectFit"
+                                        HeightRequest="25"
+                                        Source="icon_promotion.png"
+                                        WidthRequest="25" />
+                                </Border>
+                                <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                                    <Label
+                                        Margin="10,0"
+                                        Grid.Column="1"
+                                        FontSize="14"
+                                        LineBreakMode="TailTruncation"
+                                        Style="{StaticResource lblBold2}"
+                                        Text="{Binding Title}"
+                                        TextColor="#1A1A1A" />
+                                    <Label 
+                                        Margin="10,0"
+                                        Grid.Column="1"
+                                        FontSize="12"
+                                        LineBreakMode="TailTruncation"
+                                        Style="{StaticResource lblRegular}"
+                                        Text="{Binding Description}"
+                                        TextColor="Black"/>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="5" VerticalOptions="Center" Grid.Column="2">
+
+                                    <Border
+                                        HeightRequest="8"
+                                        WidthRequest="8"
+                                        IsVisible="{Binding ShowUnreadIndicator}"
+                                        Background="#2D8CFF"/>
+                                    <!--IsVisible="{Binding IsRead, Converter={StaticResource InverseBooleanConverter}}"-->
+                                    <Label 
+                                        VerticalOptions="End"
+                                        HorizontalOptions="Center"
+                                        Margin="10,0"
+                                        Grid.Column="1"
+                                        FontSize="12"
+                                        Text="{Binding TimeAgo}"
+                                        LineBreakMode="TailTruncation"
+                                        Style="{StaticResource lblRegular}"
+                                        TextColor="Black"/>
+                                </VerticalStackLayout>
+
+                                <BoxView
+        Margin="0,70,0,0"
+        Grid.ColumnSpan="3"
+        HeightRequest="1"
+        BackgroundColor="{StaticResource AppGray}"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+            <ext:CustomLoaderView
+                x:Name="loaderView"
+                Grid.RowSpan="2"
+                IsVisible="False" />
+        </Grid>
+    </RefreshView>
+
+
+</ContentPage>

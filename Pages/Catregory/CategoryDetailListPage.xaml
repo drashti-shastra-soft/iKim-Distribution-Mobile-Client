@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="i_KimMobileClient.Pages.Catregory.CategoryDetailListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:i_KimMobileClient.Converter"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    NavigationPage.HasNavigationBar="False">
+    <Grid Background="WhiteSmoke" RowDefinitions="Auto,*">
+        <Grid
+            Grid.Row="0"
+            Padding="15"
+            BackgroundColor="{StaticResource AppPrimary}"
+            ColumnDefinitions="Auto,*,Auto">
+
+            <Border
+                Grid.Column="0"
+                Padding="10"
+                Background="White"
+                HeightRequest="40"
+                StrokeShape="RoundRectangle 12"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                WidthRequest="40">
+                <Image
+                    x:Name="BtnBack"
+                    HeightRequest="22"
+                    HorizontalOptions="Center"
+                    Source="back"
+                    VerticalOptions="Center"
+                    WidthRequest="22">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                    </Image.Behaviors>
+                </Image>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BtnBack_Tapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <VerticalStackLayout
+                Grid.Column="1"
+                Margin="14,0,0,0"
+                VerticalOptions="Center">
+                <Label
+                    x:Name="LblTital"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Categories"
+                    TextColor="White" />
+                <Label
+                    FontSize="13"
+                    Text="Choose A Category To Explore Products"
+                    TextColor="#FFE0C0" />
+            </VerticalStackLayout>
+
+            <Grid
+                Grid.Column="2"
+                HeightRequest="40"
+                VerticalOptions="Center"
+                WidthRequest="40">
+                <Border
+                    Background="White"
+                    HeightRequest="40"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 24"
+                    WidthRequest="40">
+                    <Border.GestureRecognizers>
+                        <!--<TapGestureRecognizer Command="{Binding OpenCartCommand}" />-->
+                        <TapGestureRecognizer Tapped="OpenCartItem_Tapped" />
+                    </Border.GestureRecognizers>
+                    <Image
+                        Aspect="AspectFit"
+                        HeightRequest="20"
+                        HorizontalOptions="Center"
+                        Source="icon_cart"
+                        VerticalOptions="Center"
+                        WidthRequest="20" />
+                </Border>
+
+                <!--  Badge  -->
+                <Border
+                    Padding="5,2"
+                    Background="#E53935"
+                    HorizontalOptions="End"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    TranslationX="6"
+                    TranslationY="-4"
+                    VerticalOptions="Start">
+                    <Label
+                        x:Name="lblCartItemCount"
+                        FontAttributes="Bold"
+                        FontSize="10"
+                        Text="0"
+                        TextColor="White" />
+                </Border>
+            </Grid>
+
+        </Grid>
+
+        <CollectionView
+            x:Name="clsCategoryItems"
+            Grid.Row="1"
+            Margin="15"
+            SelectionMode="None">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    HorizontalItemSpacing="10"
+                    Orientation="Vertical"
+                    Span="2"
+                    VerticalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.Footer>
+                <BoxView BackgroundColor="Transparent" HeightRequest="120" />
+            </CollectionView.Footer>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Padding="8"
+                        Background="White"
+                        Stroke="Transparent"
+                        StrokeShape="RoundRectangle 5"
+                        VerticalOptions="StartAndExpand">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectCommand}" />
+                        </Border.GestureRecognizers>
+
+                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+
+                            <Border
+                                Grid.Row="0"
+                                Background="Transparent"
+                                HeightRequest="100"
+                                StrokeShape="{RoundRectangle CornerRadius=8}"
+                                WidthRequest="150">
+                                <!--    -->
+                                <Image
+                                    Margin="0,0,0,0"
+                                    Aspect="Fill"
+                                    HeightRequest="100"
+                                    Source="{Binding ImageSourceCached}"
+                                    WidthRequest="150" />
+                                    <!--Source="{Binding Base64String, Converter={conv:Base64ToImageConverter}}"-->
+                            </Border>
+
+                            <StackLayout
+                                Grid.Row="1"
+                                Margin="0"
+                                HorizontalOptions="Start"
+                                Spacing="0"
+                                VerticalOptions="Start">
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    Style="{StaticResource lblRegular}"
+                                    Text="{Binding Name}"
+                                    TextColor="{StaticResource AppBlack}" />
+                                <StackLayout Orientation="Horizontal" Spacing="5">
+                                    <Label
+                                        FontSize="18"
+                                        Style="{StaticResource lblBold}"
+                                        Text="{Binding QuntityUnit}"
+                                        TextColor="{StaticResource AppBlack}" />
+                                    <Label
+                                        VerticalOptions="Center"
+                                        FontSize="18"
+                                        Style="{StaticResource lblBold}"
+                                        Text="{Binding UnitOfMeasure}"
+                                        TextColor="{StaticResource AppPrimary}" />
+                                </StackLayout>
+
+                                <!--<Grid ColumnDefinitions="Auto,*, Auto">
+                                    <StackLayout Orientation="Horizontal" Spacing="5">
+                                        <Label
+                                             FontSize="13"
+                                             Style="{StaticResource lblBold}"
+                                             Text="{Binding QuntityUnit}"
+                                             TextColor="{StaticResource AppBlack}" />
+                                        <Label
+                                             FontSize="13"
+                                             Style="{StaticResource lblBold}"
+                                             Text="{Binding UnitOfMeasure}"
+                                             TextColor="{StaticResource AppPrimary}" />
+                                    </StackLayout>
+
+                                    <Label
+                                        Grid.Column="2"
+                                             FontSize="13"
+                                              Style="{StaticResource lblBold}"
+                                              Text="{Binding Price, StringFormat='₹ {0:F2}'}"
+                                              TextColor="{StaticResource AppBlack}" />
+                                </Grid>-->
+                            </StackLayout>
+
+                            <Grid
+                                Grid.Row="2"
+                                ColumnDefinitions="Auto,*"
+                                VerticalOptions="Start">
+                                <Label
+                                    Grid.Column="0"
+                                    FontSize="15"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Start"
+                                    Style="{StaticResource lblBold}"
+                                    Text="{Binding Price, StringFormat='₹ {0:F2}'}"
+                                    TextColor="{StaticResource AppBlack}" />
+                                <StackLayout
+                                    Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    Spacing="25">
+                                    <Border
+                                        Margin="0,0,0,0"
+                                        Padding="5"
+                                        Background="{StaticResource AppPrimary}"
+                                        HeightRequest="30"
+                                        HorizontalOptions="EndAndExpand"
+                                        StrokeShape="{RoundRectangle CornerRadius=5}"
+                                        VerticalOptions="End"
+                                        WidthRequest="30">
+
+                                        <Image
+                                            Aspect="AspectFit"
+                                            HeightRequest="10"
+                                            Source="icon_minus"
+                                            WidthRequest="10">
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="#FFFFFF" />
+                                            </Image.Behaviors>
+                                        </Image>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BdrMinusPartyOrder_Tapped" />
+                                        </Border.GestureRecognizers>
+                                    </Border>
+
+                                    <Border
+                                        Margin="0,0,0,0"
+                                        Padding="5"
+                                        Background="{StaticResource AppPrimary}"
+                                        HeightRequest="30"
+                                        HorizontalOptions="EndAndExpand"
+                                        StrokeShape="{RoundRectangle CornerRadius=5}"
+                                        VerticalOptions="End"
+                                        WidthRequest="30">
+
+                                        <Image
+                                            Aspect="AspectFit"
+                                            HeightRequest="10"
+                                            Source="icon_plus_white"
+                                            WidthRequest="10" />
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BdrAddPartyOrder_Tapped" />
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                </StackLayout>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <StackLayout
+            Grid.Row="1"
+            Margin="15,0,15,15"
+            Spacing="10"
+            VerticalOptions="EndAndExpand">
+            <Border
+                Grid.Column="0"
+                Padding="10,0"
+                Background="White"
+                HeightRequest="48"
+                Stroke="LightGray"
+                StrokeShape="RoundRectangle 8"
+                StrokeThickness="1">
+                <Border.Shadow>
+                    <Shadow
+                        Brush="White"
+                        Opacity="0.08"
+                        Radius="10"
+                        Offset="0,-3" />
+                </Border.Shadow>
+                <Grid ColumnDefinitions="*,Auto">
+                    <ext:BorderlessEntry
+                        Grid.Column="0"
+                        Background="Transparent"
+                        FontSize="14"
+                        Placeholder="Search Categories"
+                        PlaceholderColor="#9E9E9E"
+                        Text="{Binding SearchText}"
+                        TextChanged="txtSearch_TextChanged"
+                        TextColor="#1A1A1A"
+                        VerticalOptions="Center" />
+
+
+                    <Image
+                        Grid.Column="1"
+                        Aspect="AspectFill"
+                        HeightRequest="25"
+                        Source="icon_search.png"
+                        WidthRequest="25">
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="#190649" />
+                        </Image.Behaviors>
+                    </Image>
+                </Grid>
+            </Border>
+
+            <Border
+                x:Name="BtnPlaceOrder"
+                Background="#FF6B00"
+                HeightRequest="55"
+                StrokeShape="RoundRectangle 10"
+                StrokeThickness="0">
+                <Border.Shadow>
+                    <Shadow
+                        Brush="#FF6B00"
+                        Opacity="0.35"
+                        Radius="12"
+                        Offset="0,4" />
+                </Border.Shadow>
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Image
+                        HeightRequest="22"
+                        Source="icon_cart.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="22">
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="White" />
+                        </Image.Behaviors>
+                    </Image>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="Add To Cart"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="AddToCard_Tapped" />
+                </Border.GestureRecognizers>
+            </Border>
+        </StackLayout>
+
+        <ext:CustomLoaderView
+            x:Name="loaderView"
+            Grid.RowSpan="2"
+            IsVisible="False" />
+    </Grid>
+</ContentPage>

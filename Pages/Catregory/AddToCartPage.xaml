@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="i_KimMobileClient.Pages.Catregory.AddToCartPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:i_KimMobileClient.Converter"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    NavigationPage.HasNavigationBar="False">
+    <RefreshView
+        x:Name="OrderRefreshView"
+        RefreshColor="#FF6B00"
+        Refreshing="OnRefreshing">
+        <Grid Background="WhiteSmoke" RowDefinitions="Auto,*,Auto">
+            <Grid
+                Grid.Row="0"
+                Padding="15"
+                BackgroundColor="{StaticResource AppPrimary}"
+                ColumnDefinitions="Auto,*,Auto">
+
+                <Border
+                    Grid.Column="0"
+                    Padding="10"
+                    Background="White"
+                    HeightRequest="40"
+                    StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    VerticalOptions="Center"
+                    WidthRequest="40">
+                    <Image
+                        x:Name="BtnBack"
+                        HeightRequest="22"
+                        HorizontalOptions="Center"
+                        Source="back"
+                        VerticalOptions="Center"
+                        WidthRequest="22">
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                        </Image.Behaviors>
+                    </Image>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BtnBack_Tapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    Margin="14,0,0,0"
+                    VerticalOptions="Center">
+                    <Label
+                        x:Name="LblTital"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="My Cart"
+                        TextColor="White" />
+                    <Label
+                        FontSize="13"
+                        Text="Review Your Items And Place Your Order"
+                        TextColor="#FFE0C0" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <CollectionView
+                x:Name="clsItems"
+                Grid.Row="1"
+                VerticalScrollBarVisibility="Never"
+                Margin="15,0">
+                <CollectionView.Footer>
+                    <BoxView BackgroundColor="Transparent" HeightRequest="180" />
+                </CollectionView.Footer>
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout
+                        Padding="40,60"
+                        HorizontalOptions="Center"
+                        Spacing="12"
+                        VerticalOptions="Center">
+                        <Border
+                            Background="#FFF3E0"
+                            HeightRequest="72"
+                            HorizontalOptions="Center"
+                            StrokeShape="RoundRectangle 36"
+                            StrokeThickness="0"
+                            WidthRequest="72">
+                            <Image
+                                HeightRequest="36"
+                                HorizontalOptions="Center"
+                                Source="icon_cart"
+                                VerticalOptions="Center"
+                                WidthRequest="36">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#FF6B00" />
+                                </Image.Behaviors>
+                            </Image>
+                        </Border>
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource lblsemiBold}"
+                            Text="No cart item"
+                            TextColor="#1A1A1A" />
+                        <!--<Label
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            Text="No cart found"
+                            TextColor="#9E9E9E" />-->
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,15,0,0">
+                            <Border
+                                Padding="10"
+                                Background="#FFFFFF"
+                                StrokeShape="{RoundRectangle CornerRadius=14}">
+                                <StackLayout Spacing="0">
+
+                                    <!--  Item: Mango Shake  -->
+                                    <Grid Padding="0,0" ColumnDefinitions="Auto,*,Auto">
+                                        <Border
+                                            Grid.Column="0"
+                                            Padding="0"
+                                            BackgroundColor="#FFFDE7"
+                                            HeightRequest="60"
+                                            StrokeShape="{RoundRectangle CornerRadius=10}"
+                                            WidthRequest="60">
+                                            <Image 
+                                                Aspect="AspectFit" 
+                                                Source="{Binding Base64String, 
+                                                Converter={conv:Base64ToImageConverter}}" />
+                                        </Border>
+
+                                        <Grid
+                                            VerticalOptions="Center"
+                                            Grid.Column="1"
+                                            Margin="10,0,0,0"
+                                            RowDefinitions="Auto,Auto"
+                                            RowSpacing="10">
+
+                                            <StackLayout Grid.Row="0">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="14"
+                                                    Style="{StaticResource lblsemiBold}"
+                                                    Text="{Binding Item}"
+                                                    TextColor="#1A1A1A" />
+
+                                                <!--<Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="10"
+                                                    Style="{StaticResource lblsemiBold}"
+                                                    Text="Clasic venila delight"
+                                                    TextColor="#1A1A1A" />-->
+                                            </StackLayout>
+
+
+                                            <StackLayout
+                                                Grid.Row="1"
+                                                Orientation="Horizontal"
+                                                Spacing="10">
+                                                <Border
+                                                    Margin="0"
+                                                    Padding="5,3"
+                                                    Background="#FEE7D9"
+                                                    StrokeShape="{RoundRectangle CornerRadius=5}">
+                                                    <StackLayout Orientation="Horizontal" Spacing="3">
+                                                        <Label
+                                                            FontSize="12"
+                                                            Style="{StaticResource lblsemiBold}"
+                                                            Text="{Binding Quantity}"
+                                                            TextColor="{StaticResource AppPrimary}" />
+                                                        <Label
+                                                            FontSize="12"
+                                                            Style="{StaticResource lblsemiBold}"
+                                                            Text="{Binding UnitOfMeasure}"
+                                                            TextColor="{StaticResource AppPrimary}" />
+                                                    </StackLayout>
+                                                </Border>
+
+                                                <Label
+                                                    FontSize="13"
+                                                    HorizontalOptions="StartAndExpand"
+                                                    Style="{StaticResource lblBold}"
+                                                    Text="{Binding Amount, StringFormat='₹ {0:F2}'}"
+                                                    TextColor="{StaticResource AppBlack}"
+                                                    VerticalTextAlignment="Center" />
+                                            </StackLayout>
+                                        </Grid>
+
+                                        <StackLayout Grid.Column="2" Spacing="15">
+                                            <Image
+                                                Aspect="AspectFit"
+                                                HeightRequest="18"
+                                                HorizontalOptions="End"
+                                                Source="icon_delete.png"
+                                                WidthRequest="18">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BtnDelete_Tapped" />
+                                                </Image.GestureRecognizers>
+                                            </Image>
+
+                                            <StackLayout
+                                                Orientation="Horizontal"
+                                                Spacing="6"
+                                                VerticalOptions="End">
+
+                                                <Border
+                                                    Margin="0,0,0,0"
+                                                    Padding="5"
+                                                    Background="{StaticResource AppPrimary}"
+                                                    HeightRequest="25"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    StrokeShape="{RoundRectangle CornerRadius=5}"
+                                                    VerticalOptions="End"
+                                                    WidthRequest="25">
+
+                                                    <Image
+                                                        Aspect="AspectFit"
+                                                        HeightRequest="10"
+                                                        Source="icon_minus"
+                                                        WidthRequest="10">
+                                                        <Image.Behaviors>
+                                                            <toolkit:IconTintColorBehavior TintColor="#FFFFFF" />
+                                                        </Image.Behaviors>
+                                                    </Image>
+                                                    <Border.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BdrMinusPartyOrder_Tapped" />
+                                                    </Border.GestureRecognizers>
+                                                </Border>
+
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="14"
+                                                    HorizontalTextAlignment="Center"
+                                                    Text="{Binding Quantity}"
+                                                    TextColor="#1A1A1A"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="22" />
+
+                                                <Border
+                                                    Margin="0,0,0,0"
+                                                    Padding="5"
+                                                    Background="{StaticResource AppPrimary}"
+                                                    HeightRequest="25"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    StrokeShape="{RoundRectangle CornerRadius=5}"
+                                                    VerticalOptions="End"
+                                                    WidthRequest="25">
+
+                                                    <Image
+                                                        Aspect="AspectFit"
+                                                        HeightRequest="10"
+                                                        Source="icon_plus_white"
+                                                        WidthRequest="10" />
+                                                    <Border.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BdrAddPartyOrder_Tapped" />
+                                                    </Border.GestureRecognizers>
+                                                </Border>
+
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Grid>
+
+                                </StackLayout>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <StackLayout
+                Grid.Row="2"
+                Margin="15,0,15,15"
+                Spacing="10"
+                VerticalOptions="EndAndExpand">
+                <Border
+                    Grid.Column="0"
+                    Padding="10,0"
+                    Background="White"
+                    HeightRequest="48"
+                    StrokeShape="RoundRectangle 8"
+                    StrokeThickness="1">
+                    <Border.Shadow>
+                        <Shadow
+                            Brush="White"
+                            Opacity="0.08"
+                            Radius="10"
+                            Offset="0,-3" />
+                    </Border.Shadow>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label
+                            Grid.Column="0"
+                            FontSize="15"
+                            Style="{StaticResource lblBold}"
+                            Text="Total Payment"
+                            TextColor="{StaticResource AppBlack}"
+                            VerticalTextAlignment="Center" />
+                        <Label
+                            x:Name="lblGrandTotal"
+                            Grid.Column="1"
+                            FontSize="15"
+                            Style="{StaticResource lblsemiBold}"
+                            Text="₹ 0.00"
+                            TextColor="{StaticResource AppPrimary}"
+                            VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <Border
+                    x:Name="BtnPlaceOrder"
+                    Background="#FF6B00"
+                    HeightRequest="55"
+                    StrokeShape="RoundRectangle 10"
+                    StrokeThickness="0">
+                    <Border.Shadow>
+                        <Shadow
+                            Brush="#FF6B00"
+                            Opacity="0.35"
+                            Radius="12"
+                            Offset="0,4" />
+                    </Border.Shadow>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                        <Image
+                            HeightRequest="22"
+                            Source="icon_cart.svg"
+                            VerticalOptions="Center"
+                            WidthRequest="22">
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="White" />
+                            </Image.Behaviors>
+                        </Image>
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            Text="Place Order"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AddToCard_Tapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+            </StackLayout>
+
+            <ext:CustomLoaderView
+                x:Name="loaderView"
+                Grid.RowSpan="3"
+                IsVisible="False" />
+        </Grid>
+
+    </RefreshView>
+</ContentPage>

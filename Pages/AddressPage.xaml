@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="i_KimMobileClient.Pages.AddressPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    NavigationPage.HasNavigationBar="False">
+    <Grid Background="WhiteSmoke" RowDefinitions="Auto,*,Auto">
+        <!--  Header  -->
+        <Grid
+            Grid.Row="0"
+             Padding="15"
+             BackgroundColor="{StaticResource AppPrimary}"
+             ColumnDefinitions="Auto,*,Auto">
+
+            <Border
+                 Grid.Column="0"
+                 Padding="10"
+                 Background="White"
+                 HeightRequest="40"
+                 StrokeShape="RoundRectangle 12"
+                 StrokeThickness="0"
+                 VerticalOptions="Center"
+                 WidthRequest="40">
+                <Image
+                     HeightRequest="22"
+                     HorizontalOptions="Center"
+                     Source="back"
+                     VerticalOptions="Center"
+                     WidthRequest="22">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                    </Image.Behaviors>
+                </Image>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BackButton_Clicked" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <VerticalStackLayout
+                 Grid.Column="1"
+                 Margin="14,0,0,0"
+                 VerticalOptions="Center">
+                <Label
+                     x:Name="LblTitle"
+                     FontAttributes="Bold"
+                     FontSize="20"
+                     Text=""
+                     TextColor="White" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!--  Scrollable Content  -->
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="15,10" Spacing="15">
+                <!--<Border
+            Margin="15,0"
+            Padding="0"
+            Background="WhiteSmoke"
+            HeightRequest="750"
+            StrokeShape="{RoundRectangle CornerRadius=10}">
+                            <Border.Shadow>
+                                <Shadow
+                    Brush="Black"
+                    Opacity="0.05"
+                    Radius="5"
+                    Offset="0,2" />
+                            </Border.Shadow>
+                            <Grid
+                Margin="0"
+                Padding="0"
+                RowDefinitions="Auto,*">
+                                
+                            </Grid>
+                        </Border>-->
+
+                <Grid
+        Grid.Row="1"
+        Padding="15,15,15,10"
+        RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+        RowSpacing="15">
+                    <!--  Line 1  -->
+                    <StackLayout Grid.Row="0" Spacing="5">
+                        <!--<Label
+                FontSize="14"
+                Style="{StaticResource lblsemiBold}"
+                Text="Line 1"
+                TextColor="#000000" />-->
+                        <StackLayout Orientation="Horizontal" Spacing="3">
+                            <Label
+                FontSize="13"
+                Style="{StaticResource lblBold}"
+                Text="Line 1"
+                TextColor="{StaticResource AppBlack}" />
+                            <Label
+                FontSize="18"
+                Style="{StaticResource lblBold}"
+                Text="*"
+                TextColor="Red" />
+                        </StackLayout>
+
+
+
+                        <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                            <Grid Margin="5,0,0,0" ColumnDefinitions="Auto,*">
+                                <Image
+                        Grid.Column="0"
+                        Source="icon_location"
+                        WidthRequest="20" />
+
+                                <ext:BorderlessEntry
+                        x:Name="txtLineOne"
+                        Grid.Column="1"
+                        Margin="5,0"
+                        Keyboard="Default"
+                        Placeholder="Enter Line 1"
+                        Style="{StaticResource extEntry}"
+                        TextChanged="txtLineOne_TextChanged" />
+
+                            </Grid>
+                        </Border>
+                        <Label
+                x:Name="LblLine1"
+                FontSize="11"
+                IsVisible="False"
+                Style="{StaticResource lblRegular}"
+                Text="Please Enter Line 1"
+                TextColor="Red" />
+                    </StackLayout>
+
+                    <!--  Line 2  -->
+                    <StackLayout Grid.Row="1" Spacing="5">
+                        <Label
+                FontSize="14"
+                Style="{StaticResource lblsemiBold}"
+                Text="Line 2"
+                TextColor="#000000" />
+
+                        <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                            <Grid Margin="5,0,0,0" ColumnDefinitions="Auto,*">
+
+                                <Image
+                        Grid.Column="0"
+                        Source="icon_location"
+                        WidthRequest="20" />
+
+                                <ext:BorderlessEntry
+                        x:Name="txtLineTwo"
+                        Grid.Column="1"
+                        Margin="5,0"
+                        Placeholder="Enter Line 2"
+                        Style="{StaticResource extEntry}" />
+                            </Grid>
+                        </Border>
+                    </StackLayout>
+
+                    <!--  Line - 3  -->
+                    <StackLayout Grid.Row="2" Spacing="5">
+                        <Label
+                FontSize="14"
+                Style="{StaticResource lblsemiBold}"
+                Text="Line 3"
+                TextColor="#000000" />
+
+                        <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                            <Grid Margin="5,0,0,0" ColumnDefinitions="Auto,*">
+                                <Image
+                        Grid.Column="0"
+                        Source="icon_location"
+                        WidthRequest="20" />
+                                <ext:BorderlessEntry
+                        x:Name="txtLineThree"
+                        Grid.Column="1"
+                        Margin="5,0"
+                        Keyboard="Default"
+                        Placeholder="Enter Line 3"
+                        Style="{StaticResource extEntry}" />
+                            </Grid>
+                        </Border>
+
+                    </StackLayout>
+
+                    <!--  City  -->
+                    <StackLayout Grid.Row="3" Spacing="5">
+                        <!--<Label
+                FontSize="14"
+                Style="{StaticResource lblsemiBold}"
+                Text="City"
+                TextColor="#000000" />-->
+
+                        <StackLayout Orientation="Horizontal" Spacing="3">
+                            <Label
+        FontSize="13"
+        Style="{StaticResource lblBold}"
+        Text="City"
+        TextColor="{StaticResource AppBlack}" />
+                            <Label
+        FontSize="18"
+        Style="{StaticResource lblBold}"
+        Text="*"
+        TextColor="Red" />
+                        </StackLayout>
+
+                        <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                            <ext:BorderlessEntry
+                    x:Name="txtCity"
+                    Grid.Column="1"
+                    Keyboard="Default"
+                    Placeholder="Enter City"
+                    Style="{StaticResource extEntry}"
+                    TextChanged="txtCity_TextChanged" />
+                        </Border>
+                        <Label
+                x:Name="LblCity"
+                FontSize="11"
+                IsVisible="False"
+                Style="{StaticResource lblRegular}"
+                Text="Please Enter City"
+                TextColor="Red" />
+                    </StackLayout>
+
+                    <!--  State  -->
+                    <StackLayout Grid.Row="4" Spacing="5">
+                        <!--<Label
+                FontSize="14"
+                Style="{StaticResource lblsemiBold}"
+                Text="State"
+                TextColor="#000000" />-->
+                        <StackLayout Orientation="Horizontal" Spacing="3">
+                            <Label
+        FontSize="13"
+        Style="{StaticResource lblBold}"
+        Text="State"
+        TextColor="{StaticResource AppBlack}" />
+                            <Label
+        FontSize="18"
+        Style="{StaticResource lblBold}"
+        Text="*"
+        TextColor="Red" />
+                        </StackLayout>
+
+
+                        <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                            <ext:BorderlessEntry
+                    x:Name="txtState"
+                    Keyboard="Default"
+                    Placeholder="Enter State"
+                    Style="{StaticResource extEntry}"
+                    TextChanged="txtState_TextChanged" />
+
+                        </Border>
+                        <Label
+                x:Name="LblState"
+                FontSize="11"
+                IsVisible="False"
+                Style="{StaticResource lblRegular}"
+                Text="Please Enter State"
+                TextColor="Red" />
+                    </StackLayout>
+
+                    <!--  Zip Code  -->
+                    <StackLayout Grid.Row="5" Spacing="5">
+                        <!--<Label
+                FontSize="14"
+                Style="{StaticResource lblsemiBold}"
+                Text="Zip Code"
+                TextColor="#000000" />-->
+
+                        <StackLayout Orientation="Horizontal" Spacing="3">
+                            <Label
+        FontSize="13"
+        Style="{StaticResource lblBold}"
+        Text="Zip Code"
+        TextColor="{StaticResource AppBlack}" />
+                            <Label
+        FontSize="18"
+        Style="{StaticResource lblBold}"
+        Text="*"
+        TextColor="Red" />
+                        </StackLayout>
+
+                        <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                            <ext:BorderlessEntry
+                    x:Name="txtZipcode"
+                    Keyboard="Default"
+                    Placeholder="Enter Zip Code"
+                    Style="{StaticResource extEntry}"
+                    TextChanged="txtZipcode_TextChanged" />
+                        </Border>
+                        <Label
+                x:Name="LblZipCode"
+                FontSize="11"
+                IsVisible="False"
+                Style="{StaticResource lblRegular}"
+                Text="Please Enter Zip Code"
+                TextColor="Red" />
+                    </StackLayout>
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+
+        <!--  Place Order Button  -->
+        <Grid
+                Grid.Row="2"
+                Padding="15"
+                BackgroundColor="#F7F8FA">
+            <Border
+                    x:Name="BtnAddItem"
+                    Background="#FF6B00"
+                    HeightRequest="56"
+                    StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0">
+                <Border.Shadow>
+                    <Shadow
+                            Brush="#FF6B00"
+                            Opacity="0.35"
+                            Radius="12"
+                            Offset="0,4" />
+                </Border.Shadow>
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Label
+                            x:Name="BtnSubmit"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            Text="Submit"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="BtnSubmit_Clicked" />
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+
+        <ext:CustomLoaderView
+                x:Name="loaderView"
+                Grid.RowSpan="2"
+                IsVisible="False" />
+    </Grid>
+</ContentPage>

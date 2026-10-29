@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="i_KimMobileClient.Views.OrderView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bottomSheet="https://schemas.the49.com/dotnet/2023/maui/bottomsheet"
+    xmlns:conv="clr-namespace:i_KimMobileClient.Converter"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    <RefreshView
+        x:Name="OrderRefreshView"
+        Grid.Row="1"
+        Command="{Binding RefreshCommand}"
+        RefreshColor="#FF6B00"
+        Refreshing="OnRefreshing">
+
+        <Grid RowDefinitions="Auto,Auto,*">
+            <!--  Header  -->
+            <Grid
+                Grid.Row="0"
+                Padding="15"
+                BackgroundColor="{StaticResource AppPrimary}"
+                ColumnDefinitions="Auto,*,Auto">
+
+                <Border
+                    Grid.Column="0"
+                    Padding="10"
+                    Background="White"
+                    HeightRequest="40"
+                    StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    VerticalOptions="Center"
+                    WidthRequest="40">
+                    <Image
+                        HeightRequest="30"
+                        HorizontalOptions="Center"
+                        Source="icon_delivery.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="30">
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{StaticResource Gray950}" />
+                        </Image.Behaviors>
+                    </Image>
+                </Border>
+
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    Margin="14,0,0,0"
+                    VerticalOptions="Center">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="22"
+                        Text="Orders"
+                        TextColor="White" />
+                    <Label
+                        FontSize="13"
+                        Text="Manage All Your Orders"
+                        TextColor="#FFE0C0" />
+                </VerticalStackLayout>
+
+                <!--<Border
+                    Grid.Column="2"
+                    Padding="10"
+                    Background="White"
+                    HeightRequest="40"
+                    StrokeShape="RoundRectangle 12"
+                    StrokeThickness="0"
+                    VerticalOptions="Center"
+                    WidthRequest="40">
+                    <Image
+                        HeightRequest="22"
+                        HorizontalOptions="Center"
+                        Source="icon_filter.svg"
+                        VerticalOptions="Center"
+                        WidthRequest="22">
+                        <Image.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                        </Image.Behaviors>
+                    </Image>
+                </Border>-->
+            </Grid>
+
+            <!--  Tab Filter  -->
+            <Grid
+                Grid.Row="1"
+                Padding="16,14,16,14"
+                BackgroundColor="White"
+                ColumnDefinitions="*,*,*"
+                ColumnSpacing="10">
+
+                <!--<Border
+                    x:Name="TabAllOrders"
+                    Grid.Column="0"
+                    Padding="0,11"
+                    AutomationId="All"
+                    Background="{StaticResource AppPrimary}"
+                    Stroke="#E0E0E0"
+                    StrokeShape="RoundRectangle 10"
+                    StrokeThickness="1">
+                    <Label
+                        x:Name="lblAll"
+                        FontSize="11"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="All Orders"
+                        TextColor="White" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFilterTapped" />
+                    </Border.GestureRecognizers>
+                </Border>-->
+
+                <Border
+                    x:Name="TabPending"
+                    Grid.Column="0"
+                    Padding="0,11"
+                    AutomationId="Pending"
+                    Background="White"
+                    Stroke="#E0E0E0"
+                    StrokeShape="RoundRectangle 10"
+                    StrokeThickness="1">
+                    <Label
+                        x:Name="lblPending"
+                        FontSize="10"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="Pending"
+                        TextColor="#9E9E9E" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFilterTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <Border
+                    x:Name="TabPF"
+                    Grid.Column="1"
+                    Padding="0,11"
+                    AutomationId="Partially Fulfilled"
+                    Background="White"
+                    Stroke="#E0E0E0"
+                    StrokeShape="RoundRectangle 10"
+                    StrokeThickness="1">
+                    <Label
+                        x:Name="lblTabPF"
+                        FontSize="10"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="Partially Fulfilled"
+                        TextColor="#9E9E9E" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFilterTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <Border
+                    x:Name="TabFulfilled"
+                    Grid.Column="2"
+                    Padding="0,11"
+                    AutomationId="Fulfilled"
+                    Background="White"
+                    Stroke="#E0E0E0"
+                    StrokeShape="RoundRectangle 10"
+                    StrokeThickness="1">
+                    <Label
+                        x:Name="lblFulfilled"
+                        FontSize="10"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="Fulfilled"
+                        TextColor="#9E9E9E" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFilterTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+            </Grid>
+
+            <!--  Orders List  -->
+            <CollectionView
+                x:Name="OrdersCollection"
+                Grid.Row="2"
+                BackgroundColor="#F7F8FA"
+                ItemSizingStrategy="MeasureAllItems">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="0" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.Header>
+                    <BoxView BackgroundColor="Transparent" HeightRequest="12" />
+                </CollectionView.Header>
+                <CollectionView.Footer>
+                    <BoxView BackgroundColor="Transparent" HeightRequest="12" />
+                </CollectionView.Footer>
+
+                <!--  Empty State  -->
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout
+                        Padding="40,60"
+                        HorizontalOptions="Center"
+                        Spacing="12"
+                        VerticalOptions="Center">
+                        <Border
+                            Background="#FFF3E0"
+                            HeightRequest="72"
+                            HorizontalOptions="Center"
+                            StrokeShape="RoundRectangle 36"
+                            StrokeThickness="0"
+                            WidthRequest="72">
+                            <Image
+                                HeightRequest="36"
+                                HorizontalOptions="Center"
+                                Source="icon_cart"
+                                VerticalOptions="Center"
+                                WidthRequest="36">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#FF6B00" />
+                                </Image.Behaviors>
+                            </Image>
+                        </Border>
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource lblsemiBold}"
+                            Text="No Orders"
+                            TextColor="#1A1A1A" />
+                        <!--<Label
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            Text="No orders found"
+                            TextColor="#9E9E9E" />-->
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="16,0,16,12"
+                            Padding="0"
+                            Background="White"
+                            Stroke="#EFEFEF"
+                            StrokeShape="RoundRectangle 16"
+                            StrokeThickness="1">
+                            <Border.Shadow>
+                                <Shadow
+                                    Brush="Black"
+                                    Opacity="0.05"
+                                    Radius="8"
+                                    Offset="0,2" />
+                            </Border.Shadow>
+
+                            <!--<Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    CommandParameter="{Binding .}"
+                                    NumberOfTapsRequired="1"
+                                    Tapped="BdrSelectedObject_Tapped" />
+                            </Border.GestureRecognizers>-->
+
+                            <VerticalStackLayout Spacing="0">
+
+                                <!--  Shop Row  -->
+                                <Grid Padding="0,14,14,12" ColumnDefinitions="Auto,*,Auto">
+
+                                    <!--  Shop Name + Order ID  -->
+                                    <VerticalStackLayout
+                                        Grid.Column="1"
+                                        Margin="12,0,0,0"
+                                        Spacing="3"
+                                        VerticalOptions="Center">
+
+                                        <HorizontalStackLayout Spacing="3">
+                                            <Label
+                                                FontSize="12"
+                                                Style="{StaticResource lblBold}"
+                                                Text="Order ID: "
+                                                TextColor="{StaticResource AppColor2}" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Style="{StaticResource lblBold}"
+                                                Text="{Binding Id}"
+                                                TextColor="{StaticResource AppColor2}" />
+                                        </HorizontalStackLayout>
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="12"
+                                            Text="{Binding Date, StringFormat='{0:dd MMM yyyy HH:mm tt}'}"
+                                            TextColor="#9E9E9E" />
+                                    </VerticalStackLayout>
+
+                                    <!--  Status Badge  -->
+                                    <!--  Background="{Binding StatusBgColor}" TextColor="{Binding StatusTextColor}"  -->
+                                    <Border
+                                        Grid.Column="2"
+                                        Padding="12,3"
+                                        Background="{Binding Status, Converter={conv:IntToColorConverter}}"
+                                        StrokeShape="RoundRectangle 6"
+                                        StrokeThickness="0"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="12"
+                                            Text="{Binding Status}"
+                                            TextColor="White" />
+                                    </Border>
+
+                                </Grid>
+
+                                <!--  Divider  -->
+                                <BoxView
+                                    Margin="14,0"
+                                    BackgroundColor="#F0F0F0"
+                                    HeightRequest="1" />
+
+                                <!--  Items Row  -->
+                                <Grid
+                                    Padding="10"
+                                    ColumnDefinitions="Auto,*,Auto"
+                                    ColumnSpacing="8"
+                                    RowDefinitions="Auto,Auto"
+                                    RowSpacing="10">
+
+                                    <!--  List Icon  -->
+                                    <StackLayout
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+                                        <Image
+                                            Margin="0,0,0,0"
+                                            HeightRequest="15"
+                                            Source="icon_receipt.svg"
+                                            VerticalOptions="StartAndExpand"
+                                            WidthRequest="15">
+                                            <Image.Behaviors>
+                                                <toolkit:IconTintColorBehavior TintColor="#555555" />
+                                            </Image.Behaviors>
+                                        </Image>
+
+                                        <!--  Total Items  -->
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            FontSize="13"
+                                            Style="{StaticResource lblBold}"
+                                            Text="{Binding TotalItemsText, StringFormat='Total Items: ({0})'}"
+                                            TextColor="#1A1A1A"
+                                            VerticalOptions="Start"
+                                            VerticalTextAlignment="Start" />
+                                    </StackLayout>
+
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,10,0,0"
+                                        FontSize="12"
+                                        LineBreakMode="WordWrap"
+                                        Style="{StaticResource lblsemiBold}"
+                                        Text="{Binding QuantitySummary}"
+                                        TextColor="{StaticResource AppBlack}" />
+
+                                    <!--  Total Amount Box  -->
+                                    <Border
+                                        Grid.RowSpan="2"
+                                        Grid.Column="2"
+                                        Padding="12,3"
+                                        Background="{StaticResource AppPrimary}"
+                                        StrokeShape="{RoundRectangle CornerRadius=8}"
+                                        StrokeThickness="0"
+                                        VerticalOptions="End">
+                                        <VerticalStackLayout Spacing="1">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="13"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource lblsemiBold}"
+                                                Text="{Binding TotalAmount}"
+                                                TextColor="White" />
+                                            <Label
+                                                FontSize="10"
+                                                HorizontalOptions="Center"
+                                                Style="{StaticResource lblRegular}"
+                                                Text="Total Amount"
+                                                TextColor="#FFE0C0" />
+                                        </VerticalStackLayout>
+                                    </Border>
+
+                                </Grid>
+
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <ext:CustomLoaderView
+                x:Name="loaderView"
+                Grid.RowSpan="3"
+                IsVisible="False" />
+        </Grid>
+    </RefreshView>
+</ContentView>

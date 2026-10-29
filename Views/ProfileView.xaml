@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="i_KimMobileClient.Views.ProfileView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Background="WhiteSmoke">
+    <ScrollView>
+        <Grid RowDefinitions="180,*">
+            <StackLayout
+                Grid.Row="0"
+                BackgroundColor="{StaticResource AppPrimary}"
+                VerticalOptions="Fill">
+                <!--<Image
+                    Aspect="Fill"
+                    HeightRequest="180"
+                    Source="img_bg" />-->
+            </StackLayout>
+
+            <Grid
+                Grid.Row="1"
+                Margin="15,0"
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                RowSpacing="10">
+                <StackLayout
+                    Grid.Row="0"
+                    Margin="0,-35,0,0"
+                    HorizontalOptions="CenterAndExpand">
+                    <Border
+                        Grid.Row="0"
+                        Background="Transparent"
+                        HeightRequest="70"
+                        HorizontalOptions="Center"
+                        StrokeShape="{RoundRectangle CornerRadius=35}"
+                        VerticalOptions="Center"
+                        WidthRequest="70">
+                        <Image
+                            Aspect="AspectFill"
+                            HeightRequest="70"
+                            Source="profile"
+                            VerticalOptions="Center"
+                            WidthRequest="70" />
+                    </Border>
+
+                    <Label
+                        x:Name="LblLoginUserName"
+                        FontSize="15"
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource lblsemiBold}"
+                        TextColor="{StaticResource AppBlack}" />
+                </StackLayout>
+
+                <Border
+                    Grid.Row="1"
+                    Padding="20"
+                    Background="White"
+                    ClassId="ChangePassword"
+                    StrokeShape="{RoundRectangle CornerRadius=10}">
+                    <Border.Shadow>
+                        <Shadow
+                            Brush="White"
+                            Opacity="0.08"
+                            Radius="10"
+                            Offset="0,-3" />
+                    </Border.Shadow>
+
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                        <Image
+                            Grid.Column="0"
+                            Aspect="AspectFit"
+                            Source="icon_changepassword"
+                            Style="{StaticResource ImgSmall}" />
+
+                        <Label
+                            Grid.Column="1"
+                            FontSize="15"
+                            HorizontalTextAlignment="Start"
+                            Style="{StaticResource lblsemiBold}"
+                            Text="Change Password"
+                            TextColor="{StaticResource AppBlack}" />
+
+                        <Image
+                            Grid.Column="2"
+                            Aspect="AspectFit"
+                            Rotation="180"
+                            Source="icon_back"
+                            Style="{StaticResource ImgSmall}" />
+                    </Grid>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OptionSelection_Tapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <Border
+                    Grid.Row="2"
+                    Padding="20"
+                    Background="White"
+                    ClassId="Address"
+                    StrokeShape="{RoundRectangle CornerRadius=10}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                        <Image
+                            Grid.Column="0"
+                            Aspect="AspectFit"
+                            Source="icon_address"
+                            Style="{StaticResource ImgSmall}" />
+
+                        <Label
+                            Grid.Column="1"
+                            FontSize="15"
+                            HorizontalTextAlignment="Start"
+                            Style="{StaticResource lblsemiBold}"
+                            Text="Address"
+                            TextColor="{StaticResource AppBlack}" />
+
+                        <Image
+                            Grid.Column="2"
+                            Aspect="AspectFit"
+                            Rotation="180"
+                            Source="icon_back"
+                            Style="{StaticResource ImgSmall}" />
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OptionSelection_Tapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <Border
+                    Grid.Row="3"
+                    Padding="20"
+                    Background="White"
+                    ClassId="Clear"
+                    StrokeShape="{RoundRectangle CornerRadius=10}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                        <Image
+                            Grid.Column="0"
+                            Aspect="AspectFit"
+                            Source="icon_delete.png"
+                            Style="{StaticResource ImgSmall}" >
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                            </Image.Behaviors>
+                        </Image>
+
+                        <Label
+                            Grid.Column="1"
+                            FontSize="15"
+                            HorizontalTextAlignment="Start"
+                            Style="{StaticResource lblsemiBold}"
+                            Text="Clear Cache"
+                            TextColor="{StaticResource AppBlack}" />
+
+                        <!--<Image
+                            Grid.Column="2"
+                            Aspect="AspectFit"
+                            Rotation="180"
+                            Source="icon_back"
+                            Style="{StaticResource ImgSmall}" />-->
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OptionSelection_Tapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <Border
+                    Grid.Row="4"
+                    Padding="20"
+                    Background="White"
+                    ClassId="Logout"
+                    StrokeShape="{RoundRectangle CornerRadius=10}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                        <Image
+                            Grid.Column="0"
+                            Aspect="AspectFit"
+                            Source="icon_logout"
+                            Style="{StaticResource ImgSmall}" />
+
+                        <Label
+                            Grid.Column="1"
+                            FontSize="15"
+                            HorizontalTextAlignment="Start"
+                            Style="{StaticResource lblsemiBold}"
+                            Text="Logout"
+                            TextColor="{StaticResource AppBlack}" />
+
+                        <!--<Image
+                            Grid.Column="2"
+                            Aspect="AspectFit"
+                            Rotation="180"
+                            Source="icon_back"
+                            Style="{StaticResource ImgSmall}" />-->
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OptionSelection_Tapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+
+            </Grid>
+        </Grid>
+    </ScrollView>
+</ContentView>

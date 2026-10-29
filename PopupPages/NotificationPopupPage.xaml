@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="i_KimMobileClient.PopupPages.NotificationPopupPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    xmlns:conv="clr-namespace:i_KimMobileClient.Converter"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    CloseWhenBackgroundIsClicked="True"
+    Background="#80000000">
+    <Border
+         Margin="15,80,40,0"
+         Padding="0"
+         Background="white"
+         WidthRequest="250"
+         VerticalOptions="Start"
+         HorizontalOptions="End"
+         StrokeShape="RoundRectangle 20,0,20,20">
+        <Border.Shadow>
+            <Shadow
+                 Brush="Black"
+                 Opacity="0.05"
+                 Radius="5"
+                 Offset="0,2" />
+        </Border.Shadow>
+        <Grid
+             Margin="0"
+             Padding="0"
+             RowSpacing="5"
+             RowDefinitions="Auto,*,Auto">
+
+            <Grid Padding="5" HorizontalOptions="Start">
+                <Label
+                    Padding="10,0"
+                    Grid.Column="1"
+                    Text="Notifications"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    Style="{StaticResource lblBold2}"/>
+            </Grid>
+            <BoxView
+                VerticalOptions="End"
+                Grid.ColumnSpan="2"
+                HeightRequest="1"
+                Background="{StaticResource AppPrimary}"/>
+
+            <!-- Notification Section -->
+            <CollectionView
+                    Grid.Row="1"
+                    x:Name="clsNotificationList"
+                    Background="White"
+                    SelectionMode="None">
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout  Padding="15,5"  VerticalOptions="Start">
+                            <Label
+                                Padding="0,0,0,5"
+                                Text="{Binding HeaderText}"
+                                IsVisible="{Binding ShowHeader}"
+                                FontSize="12"
+                                Style="{StaticResource lblRegular}"
+                                TextColor="#979797" />
+
+                            <Grid
+                                    ColumnDefinitions="Auto,*,Auto"
+                                    VerticalOptions ="Start"
+                                    ColumnSpacing="5">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnNotificationTapped" />
+                                </Grid.GestureRecognizers>
+                                <Border
+                                        StrokeShape="RoundRectangle 22"
+                                        StrokeThickness="0"
+                                        VerticalOptions="Center"
+                                        Background="{Binding Index, Converter={conv:IndexToColorConverter}}"
+                                        HeightRequest="25"
+                                        WidthRequest="25">
+                                    <Image
+                                            Aspect="AspectFit"
+                                            HorizontalOptions="Center"
+                                            Source="icon_promotion.png"
+                                            WidthRequest="15"
+                                            HeightRequest="15"
+                                            VerticalOptions="Center">
+                                    </Image>
+                                </Border>
+
+                                <Label
+                                        Grid.Column="1"
+                                        Text="{Binding Title}"
+                                        FontSize="12"
+                                        LineBreakMode="TailTruncation"
+                                        Style="{StaticResource lblBold}"
+                                        VerticalOptions="Center" />
+
+                                <Label
+                                        Grid.Column="2"
+                                        Text="{Binding TimeAgo}"
+                                        FontSize="10"
+                                        Style="{StaticResource lblRegular}"
+                                        TextColor="#727272"
+                                        VerticalOptions="Center" />
+
+                            </Grid>
+
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+            <Border
+                Padding="10"
+                Grid.Row="2"
+                Background="White"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 0,0,20,20">
+                <Grid
+                    ColumnDefinitions="*,Auto">
+                    <HorizontalStackLayout
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" Spacing="5">
+                        <Image
+                            Source="icon_list.png"
+                            HeightRequest="25"
+                            WidthRequest="25">
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="#2EA6FE" />
+                            </Image.Behaviors>
+                        </Image>
+                        <Label
+                            VerticalOptions="Start"
+                            HorizontalOptions="Center"
+                            Text="View All Notifications"
+                            FontSize="14"
+                            Style="{StaticResource lblBold2}"
+                            TextColor="#2EA6FE"/>
+                        <Image
+                            Source="icon_downarrow.png"
+                            WidthRequest="15"
+                            HeightRequest="15"
+                            Rotation="-90"
+                            VerticalOptions="Center">
+                            <Image.Behaviors>
+                                <!--<toolkit:IconTintColorBehavior TintColor="{StaticResource AppPrimary}" />-->
+                                <toolkit:IconTintColorBehavior TintColor="#2EA6FE" />
+                            </Image.Behaviors>
+                        </Image>
+                    </HorizontalStackLayout>
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ViewAll_Tapped"/>
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+    </Border>
+</mopups:PopupPage>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="i_KimMobileClient.PopupPages.AddressPopupPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    CloseWhenBackgroundIsClicked="False"
+    Background="#80000000">
+
+    <Border
+        Margin="15,0"
+        Padding="0"
+        Background="WhiteSmoke"
+        HeightRequest="750"
+        StrokeShape="{RoundRectangle CornerRadius=10}">
+        <Border.Shadow>
+            <Shadow
+                Brush="Black"
+                Opacity="0.05"
+                Radius="5"
+                Offset="0,2" />
+        </Border.Shadow>
+        <Grid
+            Margin="0"
+            Padding="0"
+            RowDefinitions="Auto,*">
+
+            <Grid
+                Padding="10"
+                Background="{StaticResource AppPrimary}"
+                ColumnDefinitions="*,Auto">
+                <Label
+                    x:Name="LblTitle"
+                    Grid.Column="0"
+                    FontSize="18"
+                    Style="{StaticResource lblBold}"
+                    Text="Add Address"
+                    TextColor="White"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+
+                <Image
+                    Grid.Column="1"
+                    HeightRequest="30"
+                    Rotation="45"
+                    Source="icon_plus_white"
+                    Style="{StaticResource ImgSmall}"
+                    WidthRequest="30">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BtnClose_Cliked" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Padding="15,15,15,10"
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                RowSpacing="15">
+                <!--  Line 1  -->
+                <StackLayout Grid.Row="0" Spacing="5">
+                    <Label
+                        FontSize="14"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="Line 1"
+                        TextColor="#000000" />
+
+                    <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                        <Grid Margin="5,0,0,0" ColumnDefinitions="Auto,*">
+                            <Image
+                                Grid.Column="0"
+                                Source="icon_location"
+                                WidthRequest="20" />
+
+                            <ext:BorderlessEntry
+                                x:Name="txtLineOne"
+                                Grid.Column="1"
+                                Margin="5,0"
+                                Keyboard="Default"
+                                Placeholder="Enter Line 1"
+                                Style="{StaticResource extEntry}"
+                                TextChanged="txtLineOne_TextChanged" />
+
+                        </Grid>
+                    </Border>
+                    <Label
+                        x:Name="LblLine1"
+                        FontSize="11"
+                        IsVisible="False"
+                        Style="{StaticResource lblRegular}"
+                        Text="Please Enter Line 1"
+                        TextColor="Red" />
+                </StackLayout>
+
+                <!--  Line 2  -->
+                <StackLayout Grid.Row="1" Spacing="5">
+                    <Label
+                        FontSize="14"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="Line 2"
+                        TextColor="#000000" />
+
+                    <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                        <Grid Margin="5,0,0,0" ColumnDefinitions="Auto,*">
+
+                            <Image
+                                Grid.Column="0"
+                                Source="icon_location"
+                                WidthRequest="20" />
+
+                            <ext:BorderlessEntry
+                                x:Name="txtLineTwo"
+                                Grid.Column="1"
+                                Margin="5,0"
+                                Placeholder="Enter Line 2"
+                                Style="{StaticResource extEntry}" />
+                        </Grid>
+                    </Border>
+                </StackLayout>
+
+                <!--  Line - 3  -->
+                <StackLayout Grid.Row="2" Spacing="5">
+                    <Label
+                        FontSize="14"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="Line 3"
+                        TextColor="#000000" />
+
+                    <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                        <Grid Margin="5,0,0,0" ColumnDefinitions="Auto,*">
+                            <Image
+                                Grid.Column="0"
+                                Source="icon_location"
+                                WidthRequest="20" />
+                            <ext:BorderlessEntry
+                                x:Name="txtLineThree"
+                                Grid.Column="1"
+                                Margin="5,0"
+                                Keyboard="Default"
+                                Placeholder="Enter Line 3"
+                                Style="{StaticResource extEntry}" />
+                        </Grid>
+                    </Border>
+
+                </StackLayout>
+
+                <!--  City  -->
+                <StackLayout Grid.Row="3" Spacing="5">
+                    <Label
+                        FontSize="14"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="City"
+                        TextColor="#000000" />
+
+                    <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                        <ext:BorderlessEntry
+                            x:Name="txtCity"
+                            Grid.Column="1"
+                            Keyboard="Default"
+                            Placeholder="Enter City"
+                            Style="{StaticResource extEntry}"
+                            TextChanged="txtCity_TextChanged" />
+                    </Border>
+                    <Label
+                        x:Name="LblCity"
+                        FontSize="11"
+                        IsVisible="False"
+                        Style="{StaticResource lblRegular}"
+                        Text="Please enter city"
+                        TextColor="Red" />
+                </StackLayout>
+
+                <!--  State  -->
+                <StackLayout Grid.Row="4" Spacing="5">
+                    <Label
+                        FontSize="14"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="State"
+                        TextColor="#000000" />
+
+                    <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                        <ext:BorderlessEntry
+                            x:Name="txtState"
+                            Keyboard="Default"
+                            Placeholder="Enter State"
+                            Style="{StaticResource extEntry}"
+                            TextChanged="txtState_TextChanged" />
+
+                    </Border>
+                    <Label
+                        x:Name="LblState"
+                        FontSize="11"
+                        IsVisible="False"
+                        Style="{StaticResource lblRegular}"
+                        Text="Please enter State"
+                        TextColor="Red" />
+                </StackLayout>
+
+                <!--  Zip Code  -->
+                <StackLayout Grid.Row="5" Spacing="5">
+                    <Label
+                        FontSize="14"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="Zip Code"
+                        TextColor="#000000" />
+
+                    <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                        <ext:BorderlessEntry
+                            x:Name="txtZipcode"
+                            Keyboard="Default"
+                            Placeholder="Enter Zip Code"
+                            Style="{StaticResource extEntry}"
+                            TextChanged="txtZipcode_TextChanged" />
+                    </Border>
+                    <Label
+                        x:Name="LblZipCode"
+                        FontSize="11"
+                        IsVisible="False"
+                        Style="{StaticResource lblRegular}"
+                        Text="Please enter zip code"
+                        TextColor="Red" />
+                </StackLayout>
+
+                <Button
+                    x:Name="BtnSubmit"
+                    Grid.Row="6"
+                    Clicked="BtnSubmit_Clicked"
+                    Style="{StaticResource BtnPrimary}"
+                    Text="Submit" />
+            </Grid>
+        </Grid>
+    </Border>
+
+</mopups:PopupPage>

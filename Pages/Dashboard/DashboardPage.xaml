@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="i_KimMobileClient.Pages.Dashboard.DashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Conv="clr-namespace:i_KimMobileClient.Converter"
+    xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+    BackgroundColor="#F7F8FA"
+    NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!--  Top Gradient Area  -->
+            <Grid
+                Padding="20,20,20,20"
+                ColumnDefinitions="Auto, *, Auto"
+                RowDefinitions="Auto, Auto, Auto">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0.0" Color="#FD872A" />
+                        <GradientStop Offset="0.5" Color="#FD9F54" />
+                        <GradientStop Offset="1.0" Color="#F7F8FA" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <!--  Profile Info  -->
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    BackgroundColor="#A5E0C2"
+                    HeightRequest="50"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    VerticalOptions="Center"
+                    WidthRequest="50">
+                    <Image
+                        Aspect="AspectFill"
+                        HeightRequest="50"
+                        Source="profile"
+                        WidthRequest="50" />
+                    <!--  Replace with actual image  -->
+                </Border>
+
+                <VerticalStackLayout
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="15,0,0,0"
+                    VerticalOptions="Center">
+                    <Label
+                        FontSize="12"
+                        Style="{StaticResource lblRegular}"
+                        Text="Welcome Back"
+                        TextColor="#000000" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="I kim Distributor"
+                        TextColor="#000000" />
+                </VerticalStackLayout>
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Padding="10"
+                    Background="White"
+                    HeightRequest="45"
+                    StrokeShape="RoundRectangle 22.5"
+                    StrokeThickness="0"
+                    VerticalOptions="Center"
+                    WidthRequest="45">
+                    <Image
+                        Aspect="AspectFit"
+                        HeightRequest="40"
+                        HorizontalOptions="Center"
+                        Source="notification"
+                        VerticalOptions="Center"
+                        WidthRequest="40" />
+
+                </Border>
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="0,5,-8,30"
+                    Padding="0"
+                    Background="#E53935"
+                    HeightRequest="20"
+                    HorizontalOptions="End"
+                    StrokeShape="{RoundRectangle CornerRadius=10}"
+                    StrokeThickness="0"
+                    VerticalOptions="Start"
+                    WidthRequest="20">
+                    <Label
+                        x:Name="lblNotification"
+                        FontSize="9"
+                        HorizontalOptions="Center"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </Border>
+
+                <!--  Banners Carousel  -->
+                <CarouselView
+                    x:Name="bannerCarousel"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    Margin="-20,20,-20,0"
+                    HeightRequest="140"
+                    IndicatorView="indicatorView"
+                    IsBounceEnabled="False"
+                    Loop="False"
+                    PeekAreaInsets="0">
+                    <CarouselView.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>img_slider</x:String>
+                            <x:String>img_slider</x:String>
+                            <x:String>img_slider</x:String>
+                        </x:Array>
+                    </CarouselView.ItemsSource>
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="0,0,12,0"
+                                Padding="0"
+                                HeightRequest="140"
+                                StrokeShape="RoundRectangle 20"
+                                StrokeThickness="0">
+                                <Grid>
+                                    <Image
+                                        Aspect="AspectFill"
+                                        BackgroundColor="#FF8A80"
+                                        Source="{Binding ImageSourceValue}" />
+                                    <!--  Show placeholder if image is null  -->
+                                    <!--<Label
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding ImageSourceValue, Converter={StaticResource IsNullConverter}}"
+                                        Text="No Image"
+                                        TextColor="#FF6B00"
+                                        VerticalOptions="Center" />-->
+
+                                    <Image
+                                        HeightRequest="40"
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding ImageSourceValue, Converter={StaticResource IsNullConverter}}"
+                                        Source="icon_no_image.svg"
+                                        VerticalOptions="Center"
+                                        WidthRequest="40">
+                                        <!--<Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="#FF6B00" />
+                                        </Image.Behaviors>-->
+                                    </Image>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+
+                <!--  Pagination Dots  -->
+                <IndicatorView
+                    x:Name="indicatorView"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="3"
+                    Margin="0,15,0,0"
+                    HorizontalOptions="Center"
+                    IndicatorColor="#D3D3D3"
+                    IndicatorSize="8"
+                    SelectedIndicatorColor="#FF6B00" />
+            </Grid>
+
+            <VerticalStackLayout Padding="20,10,20,20" Spacing="20">
+
+                <!--  Daily Action  -->
+                <VerticalStackLayout Spacing="10">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Style="{StaticResource lblBold}"
+                        Text="Daily Action"
+                        TextColor="#000000" />
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                        <!--  Green Card  -->
+                        <Border
+                            Grid.Column="0"
+                            Padding="10"
+                            Background="#A5D6A7"
+                            StrokeShape="RoundRectangle 10"
+                            StrokeThickness="0">
+                            <Grid
+                                ColumnDefinitions="Auto,*"
+                                ColumnSpacing="5"
+                                RowDefinitions="Auto, Auto">
+                                <Border
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Padding="3"
+                                    Background="#B0DEAE"
+                                    HeightRequest="30"
+                                    StrokeShape="{RoundRectangle CornerRadius=8}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="30">
+                                    <Image
+                                        Margin="0,0,5,0"
+                                        Source="icon_order"
+                                        VerticalOptions="Center" />
+                                </Border>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontSize="13"
+                                    Style="{StaticResource lblsemiBold}"
+                                    Text="16"
+                                    TextColor="{StaticResource AppColor2}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    FontSize="10"
+                                    Style="{StaticResource lblsemiBold}"
+                                    Text="Today Orders"
+                                    TextColor="{StaticResource AppColor2}" />
+                            </Grid>
+                        </Border>
+
+                        <!--  Orange Card  -->
+                        <Border
+                            Grid.Column="1"
+                            Padding="10"
+                            Background="#FFCC80"
+                            StrokeShape="RoundRectangle 10"
+                            StrokeThickness="0">
+                            <Grid
+                                ColumnDefinitions="Auto,*"
+                                ColumnSpacing="5"
+                                RowDefinitions="Auto, Auto">
+                                <Border
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Padding="3"
+                                    Background="#FFD892"
+                                    HeightRequest="30"
+                                    StrokeShape="{RoundRectangle CornerRadius=8}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="30">
+                                    <Image
+                                        Margin="0,0,5,0"
+                                        HorizontalOptions="Center"
+                                        Source="icon_delivery"
+                                        VerticalOptions="Center" />
+                                </Border>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontSize="13"
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource lblsemiBold}"
+                                    Text="08"
+                                    TextColor="{StaticResource AppColor2}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    FontSize="10"
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource lblsemiBold}"
+                                    Text="Pending delivery"
+                                    TextColor="{StaticResource AppColor2}" />
+                            </Grid>
+                        </Border>
+
+                        <!--  Blue Card  -->
+                        <Border
+                            Grid.Column="2"
+                            Padding="10"
+                            Background="#90CAF9"
+                            StrokeShape="RoundRectangle 10"
+                            StrokeThickness="0">
+                            <Grid
+                                ColumnDefinitions="Auto,*"
+                                ColumnSpacing="5"
+                                RowDefinitions="Auto, Auto">
+                                <Border
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Padding="3"
+                                    Background="#8FB3F2"
+                                    HeightRequest="30"
+                                    StrokeShape="{RoundRectangle CornerRadius=8}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="30">
+                                    <Image
+                                        Margin="0,0,5,0"
+                                        HorizontalOptions="Center"
+                                        Source="icon_earnings"
+                                        VerticalOptions="Center" />
+                                </Border>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontSize="13"
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource lblsemiBold}"
+                                    Text="8,000"
+                                    TextColor="{StaticResource AppColor2}" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    FontSize="10"
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource lblsemiBold}"
+                                    Text="Today Earnings"
+                                    TextColor="{StaticResource AppColor2}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!--  Quick Actions  -->
+                <VerticalStackLayout Spacing="10">
+                    <Label
+                        FontSize="16"
+                        Style="{StaticResource lblBold}"
+                        Text="Quick Actions"
+                        TextColor="#000000" />
+                    <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="10">
+                        <VerticalStackLayout
+                            Grid.Column="0"
+                            ClassId="NewOrder"
+                            HorizontalOptions="Center"
+                            Spacing="5">
+                            <Border
+                                Background="White"
+                                HeightRequest="70"
+                                Stroke="#E0E0E0"
+                                StrokeShape="RoundRectangle 15"
+                                StrokeThickness="1"
+                                WidthRequest="70">
+                                <Border.Shadow>
+                                    <Shadow
+                                        Brush="Black"
+                                        Opacity="0.05"
+                                        Radius="5"
+                                        Offset="0,2" />
+                                </Border.Shadow>
+                                <Image
+                                    HeightRequest="35"
+                                    HorizontalOptions="Center"
+                                    Source="icon_orangorder"
+                                    VerticalOptions="Center"
+                                    WidthRequest="35" />
+                            </Border>
+                            <Label
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource lblsemiBold}"
+                                Text="New Order"
+                                TextColor="{StaticResource AppColor2}" />
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="VtkStkQuikAction_Tapped" />
+                            </VerticalStackLayout.GestureRecognizers>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            ClassId="ViewOrders"
+                            HorizontalOptions="Center"
+                            Spacing="5">
+                            <Border
+                                Background="White"
+                                HeightRequest="70"
+                                Stroke="#E0E0E0"
+                                StrokeShape="RoundRectangle 15"
+                                StrokeThickness="1"
+                                WidthRequest="70">
+                                <Border.Shadow>
+                                    <Shadow
+                                        Brush="Black"
+                                        Opacity="0.05"
+                                        Radius="5"
+                                        Offset="0,2" />
+                                </Border.Shadow>
+                                <Image
+                                    HeightRequest="35"
+                                    HorizontalOptions="Center"
+                                    Source="icon_vieworders"
+                                    VerticalOptions="Center"
+                                    WidthRequest="35" />
+                            </Border>
+                            <Label
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource lblsemiBold}"
+                                Text="View Orders"
+                                TextColor="{StaticResource AppColor2}" />
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="VtkStkQuikAction_Tapped" />
+                            </VerticalStackLayout.GestureRecognizers>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout
+                            Grid.Column="2"
+                            ClassId="Deliveries"
+                            HorizontalOptions="Center"
+                            Spacing="5">
+                            <Border
+                                Background="White"
+                                HeightRequest="70"
+                                Stroke="#E0E0E0"
+                                StrokeShape="RoundRectangle 15"
+                                StrokeThickness="1"
+                                WidthRequest="70">
+                                <Border.Shadow>
+                                    <Shadow
+                                        Brush="Black"
+                                        Opacity="0.05"
+                                        Radius="5"
+                                        Offset="0,2" />
+                                </Border.Shadow>
+                                <Image
+                                    HeightRequest="35"
+                                    HorizontalOptions="Center"
+                                    Source="icon_orangedeliveri"
+                                    VerticalOptions="Center"
+                                    WidthRequest="35" />
+                            </Border>
+                            <Label
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource lblsemiBold}"
+                                Text="Deliveries"
+                                TextColor="{StaticResource AppColor2}" />
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="VtkStkQuikAction_Tapped" />
+                            </VerticalStackLayout.GestureRecognizers>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout
+                            Grid.Column="3"
+                            ClassId="Payments"
+                            HorizontalOptions="Center"
+                            Spacing="5">
+                            <Border
+                                Background="White"
+                                HeightRequest="70"
+                                Stroke="#E0E0E0"
+                                StrokeShape="RoundRectangle 15"
+                                StrokeThickness="1"
+                                WidthRequest="70">
+                                <Border.Shadow>
+                                    <Shadow
+                                        Brush="Black"
+                                        Opacity="0.05"
+                                        Radius="5"
+                                        Offset="0,2" />
+                                </Border.Shadow>
+                                <Image
+                                    HeightRequest="35"
+                                    HorizontalOptions="Center"
+                                    Source="icon_orangepayments"
+                                    VerticalOptions="Center"
+                                    WidthRequest="35" />
+                            </Border>
+                            <Label
+                                FontSize="12"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource lblsemiBold}"
+                                Text="Payments"
+                                TextColor="{StaticResource AppColor2}" />
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="VtkStkQuikAction_Tapped" />
+                            </VerticalStackLayout.GestureRecognizers>
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!--  Sale Overview  -->
+                <Border
+                    Padding="20"
+                    Background="White"
+                    Stroke="#E0E0E0"
+                    StrokeShape="RoundRectangle 15"
+                    StrokeThickness="1">
+                    <Border.Shadow>
+                        <Shadow
+                            Brush="Black"
+                            Opacity="0.05"
+                            Radius="5"
+                            Offset="0,2" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label
+                                Grid.Column="0"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                Style="{StaticResource lblsemiBold}"
+                                Text="Sale Overview"
+                                TextColor="{StaticResource AppColor2}"
+                                VerticalOptions="Center" />
+                            <Border
+                                Grid.Column="1"
+                                Padding="10,5"
+                                Background="#E0E0E0"
+                                Stroke="#E0E0E0"
+                                StrokeShape="RoundRectangle 5"
+                                StrokeThickness="1">
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label
+                                        FontSize="12"
+                                        Style="{StaticResource lblsemiBold}"
+                                        Text="This Week"
+                                        TextColor="#000000"
+                                        VerticalOptions="Center" />
+                                    <!--  Placeholder arrow image  -->
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="10"
+                                        Source="icon_downarrow"
+                                        VerticalOptions="Center"
+                                        WidthRequest="10" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Style="{StaticResource lblBold}"
+                            Text="6,800.00"
+                            TextColor="#000000" />
+                        <HorizontalStackLayout Spacing="5">
+                            <Border
+                                Padding="5,2"
+                                Background="#FFCDD2"
+                                StrokeShape="RoundRectangle 4"
+                                StrokeThickness="0">
+                                <Label
+                                    FontSize="10"
+                                    Text="4.5%"
+                                    TextColor="#D32F2F" />
+                            </Border>
+                            <Label
+                                FontSize="12"
+                                Text="from last week"
+                                TextColor="#757575"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <!--  Placeholder for chart  -->
+                        <!--  A path representation of the wave in the image  -->
+                        <Path
+                            Margin="0,15,0,0"
+                            Aspect="Fill"
+                            Data="M 0,80 Q 20,100 40,80 T 80,40 T 120,70 T 160,50 T 200,80 L 200,120 L 0,120 Z"
+                            Fill="#FFF3E0"
+                            HeightRequest="120"
+                            Stroke="#FF9800"
+                            StrokeThickness="2" />
+
+                        <!--<microcharts:ChartView x:Name="SalesChart" />-->
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

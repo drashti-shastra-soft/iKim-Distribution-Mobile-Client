@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="i_KimMobileClient.Pages.AddPartyOrderItemPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    NavigationPage.HasNavigationBar="False">
+    <Grid Background="WhiteSmoke" RowDefinitions="Auto,*,Auto">
+        <!--  Header  -->
+        <Grid
+         Grid.Row="0"
+         Padding="15"
+         BackgroundColor="{StaticResource AppPrimary}"
+         ColumnDefinitions="Auto,*,Auto">
+
+            <Border
+             Grid.Column="0"
+             Padding="10"
+             Background="White"
+             HeightRequest="40"
+             StrokeShape="RoundRectangle 12"
+             StrokeThickness="0"
+             VerticalOptions="Center"
+             WidthRequest="40">
+                <Image
+                 HeightRequest="22"
+                 HorizontalOptions="Center"
+                 Source="back"
+                 VerticalOptions="Center"
+                 WidthRequest="22">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                    </Image.Behaviors>
+                </Image>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BackButton_Clicked" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <VerticalStackLayout
+             Grid.Column="1"
+             Margin="14,0,0,0"
+             VerticalOptions="Center">
+                <Label
+                 x:Name="LblTitle"
+                 FontAttributes="Bold"
+                 FontSize="20"
+                 Text=""
+                 TextColor="White" />
+                <!--<Label
+                 FontSize="13"
+                 Text="Place your ice cream party order for your retailer"
+                 TextColor="#FFE0C0" />-->
+            </VerticalStackLayout>
+        </Grid>
+
+        <!--  Scrollable Content  -->
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="15,10" Spacing="15">
+                <StackLayout Spacing="5">
+                    <Label
+                        FontSize="14"
+                        Style="{StaticResource lblBold2}"
+                        Text="Item"
+                        TextColor="#000000" />
+
+                    <Border 
+                        Padding="0,0,10,0"
+                        Stroke="{StaticResource AppGray}"
+                        StrokeThickness="0.5"
+                        Style="{StaticResource ExtBorder}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <ext:BorderlessPicker
+                                 x:Name="itemPicker"
+                                Grid.Column="0"
+                                TextColor="#1A1A1A" 
+                                FontSize="14"
+                                Margin="10,0,10,0"
+                                Title="Select Item"
+                                VerticalOptions="Center"
+                                 ItemDisplayBinding="{Binding Name}"
+                                SelectedIndexChanged="itemPicker_SelectedIndexChanged" />
+                            <Image
+                                Grid.Column="1"
+                                Source="icon_downarrow"
+                                WidthRequest="20" >
+                                <!--<Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#000000" />
+                                </Image.Behaviors>-->
+                            </Image>
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnPickerTapped" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </StackLayout>
+
+                <StackLayout
+                     x:Name="ProductView"
+                    IsVisible="False"
+                    Spacing="5">
+                    <Label
+                         FontSize="14"
+                         Style="{StaticResource lblBold2}"
+                         Text="Product"
+                         TextColor="#000000" />
+
+                    <Border
+                         Padding="0"
+                         Background="White"
+                         Stroke="#EFEFEF"
+                         StrokeShape="RoundRectangle 16"
+                         StrokeThickness="1">
+                        <Border.Shadow>
+                            <Shadow
+                                 Brush="Black"
+                                 Opacity="0.05"
+                                 Radius="8"
+                                 Offset="0,2" />
+                        </Border.Shadow>
+
+                        <VerticalStackLayout Spacing="0">
+                            <Grid
+                                Padding="10,10"
+                                ColumnDefinitions="Auto,*">
+                                <!--  Item Image  -->
+                                <Border
+                                    HorizontalOptions="Center"
+                                    Background="LightGray"
+                                    HeightRequest="100"
+                                    StrokeShape="{RoundRectangle CornerRadius=8}"
+                                    WidthRequest="100">
+                                    <Image
+                                        x:Name="imgProductItem"
+                                          Margin="0,0,0,0"
+                                          Aspect="AspectFit"
+                                          HeightRequest="80"
+                                          Source="{Binding ImageSourceCached}"
+                                          WidthRequest="80" />
+                                </Border>
+                                <StackLayout 
+                                    Padding="0"
+                                    Grid.Column="1" 
+                                    Orientation="Vertical" >
+                                    <Label
+                                        x:Name="lblTitle"
+                                        Margin="10,0"
+                                        Grid.Column="1"
+                                        FontSize="17"
+                                        LineBreakMode="TailTruncation"
+                                        Style="{StaticResource lblBold2}"
+                                        Text=""
+                                        TextColor="#1A1A1A" />
+                                    <Label
+                                        x:Name="lblDesc"
+                                        Margin="10,0"
+                                        Grid.Column="1"
+                                        FontSize="11"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="2"
+                                        Style="{StaticResource lblRegular}"
+                                        Text=""
+                                        TextColor="DarkGray" />
+                                    <Label
+                                        Margin="10,5"
+                                        x:Name="lblPrice"
+                                        Grid.Column="1"
+                                        FontSize="15"
+                                        LineBreakMode="TailTruncation"
+                                        Style="{StaticResource lblBold}"
+                                        Text=""
+                                        TextColor="Black" />
+                                </StackLayout>
+                                
+
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </StackLayout>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <StackLayout Spacing="5">
+                        <Label
+                            FontSize="14"
+                            Style="{StaticResource lblBold2}"
+                            Text="Quantity"
+                            TextColor="#000000" />
+                        <Border 
+                            Padding="10"
+                            Stroke="{StaticResource AppGray}"
+                            StrokeThickness="0.5"
+                            Style="{StaticResource ExtBorder}">
+                            <Grid ColumnDefinitions="Auto,*,Auto" >
+                                <Border
+                                    HorizontalOptions="Start"
+                                    Padding="5"
+                                    Background="#FEE6D0"
+                                    StrokeShape="RoundRectangle 8"
+                                    IsEnabled="{Binding IsEditable}">
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="15"
+                                        Source="icon_minus"
+                                        Style="{StaticResource ImgSmall}"
+                                        WidthRequest="15" />
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BdrMinus_Tapped" />
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <Label
+                                    x:Name="txtQuantity"
+                                    Grid.Column="1"
+                                    HorizontalOptions="Center"
+                                    FontSize="16"
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource lblsemiBold}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center"
+                                    WidthRequest="25" />
+
+                                <Border
+                                    Grid.Column="2"
+                                    HorizontalOptions="End"
+                                    Padding="5"
+                                    Background="#FEE6D0"
+                                    StrokeShape="RoundRectangle 8"
+                                    IsEnabled="{Binding IsEditable}">
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="15"
+                                        Source="icon_plus"
+                                        Style="{StaticResource ImgSmall}"
+                                        WidthRequest="15" />
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BdrPlus_Tapped" />
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                            </Grid>
+                        </Border>
+                    </StackLayout>
+                    <StackLayout Grid.Column="1" Spacing="5">
+                        <Label
+                            FontSize="14"
+                            Style="{StaticResource lblBold2}"
+                            Text="Unit Of Measure"
+                            TextColor="#000000" />
+
+                        <Border 
+                            Padding="0,0,10,0"
+                            Stroke="{StaticResource AppGray}"
+                            StrokeThickness="0.5"
+                            Style="{StaticResource ExtBorder}">
+                            <Label
+                                 Margin="10,0"
+                                 HorizontalOptions="Start"
+                                 VerticalOptions="Center"
+                                 x:Name="txtUnit"
+                                 FontSize="14"
+                                 Text=""
+                                 TextColor="#1A1A1A"/>
+                        </Border>
+                    </StackLayout>
+
+
+                </Grid>
+
+                <StackLayout Spacing="5">
+                    <Label
+                         FontSize="14"
+                         Style="{StaticResource lblBold2}"
+                         Text="Rate"
+                         TextColor="#000000" />
+
+                    <Border 
+                         Padding="0,0,10,0"
+                         Stroke="{StaticResource AppGray}"
+                         StrokeThickness="0.5"
+                         Style="{StaticResource ExtBorder}">
+                        <ext:BorderlessEntry
+                            x:Name="txtRate"
+                            HorizontalOptions="Fill"
+                            HorizontalTextAlignment="Justify"
+                            Placeholder="0.00"
+                            Keyboard="Numeric"
+                            ReturnType="Done"
+                            TextChanged="txtRate_TextChanged"
+                            Style="{StaticResource extEntry}" />
+                    </Border>
+                </StackLayout>
+
+                <!-- Summary Card -->
+
+                <Border
+                     Padding="15"
+                     Background="White"
+                     Stroke="#EFEFEF"
+                     StrokeShape="RoundRectangle 16"
+                     StrokeThickness="1">
+                    <Border.Shadow>
+                        <Shadow
+                             Brush="Black"
+                             Opacity="0.05"
+                             Radius="8"
+                             Offset="0,2" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="5">
+                        <Label 
+                            Text="Order Summary"
+                            Style="{StaticResource lblBold2}"
+                            FontSize="16"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label 
+                                Text="Quantity"
+                                Style="{StaticResource lblsemiBold}"
+                                FontSize="14"/>
+                            <Label 
+                                x:Name="lblSumQuan"
+                                Grid.Column="1"
+                                Text=""
+                                FontSize="14"
+                                TextColor="{StaticResource AppOrange}"
+                                Style="{StaticResource lblBold2}"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label 
+                                Text="Rate" 
+                                Style="{StaticResource lblsemiBold}"
+                                FontSize="14"/>
+                            <Label 
+                                x:Name="lblSumRate"
+                                Grid.Column="1"
+                                Text=""
+                                FontSize="14"
+                                TextColor="{StaticResource AppOrange}"
+                                Style="{StaticResource lblBold2}"/>
+                        </Grid>
+
+
+                        <Border 
+                            Stroke="#000000"
+                            StrokeThickness="1"
+                            StrokeDashArray="5,5"
+                            HeightRequest="1"
+                            HorizontalOptions="Fill" />
+
+                        <Grid ColumnDefinitions="*,Auto">
+
+                            <Label 
+                                Text="Total Amount"
+                                Style="{StaticResource lblBold2}"
+                                FontSize="16"/>
+
+                            <Label 
+                                x:Name="txtTotalAmount"
+                                Grid.Column="1"
+                                Text=""
+                                FontSize="16"
+                                TextColor="{StaticResource AppOrange}"
+                                Style="{StaticResource lblBold2}"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+
+        <!--  Place Order Button  -->
+        <Grid
+            Grid.Row="2"
+            Padding="15"
+            BackgroundColor="#F7F8FA">
+            <Border
+                x:Name="BtnAddItem"
+                Background="#FF6B00"
+                HeightRequest="56"
+                StrokeShape="RoundRectangle 16"
+                StrokeThickness="0">
+                <Border.Shadow>
+                    <Shadow
+                        Brush="#FF6B00"
+                        Opacity="0.35"
+                        Radius="12"
+                        Offset="0,4" />
+                </Border.Shadow>
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Label
+                        x:Name="BtnLabel"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text=""
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddItemTapped" />
+                </Border.GestureRecognizers>
+            </Border>
+        </Grid>
+
+        <ext:CustomLoaderView
+            x:Name="loaderView"
+            Grid.RowSpan="2"
+            IsVisible="False" />
+    </Grid>
+</ContentPage>

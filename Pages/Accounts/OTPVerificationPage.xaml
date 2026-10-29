@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="i_KimMobileClient.Pages.Accounts.OTPVerificationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    Title="OTPVerificationPage"
+    BackgroundImageSource="img_bg"
+    NavigationPage.HasNavigationBar="False">
+    <ScrollView>
+        <Grid
+            Margin="15,15"
+            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+            RowSpacing="15">
+
+            <Image
+                x:Name="imgBack"
+                Grid.Row="0"
+                Aspect="AspectFit"
+                HeightRequest="25"
+                HorizontalOptions="Start"
+                Source="icon_back"
+                Style="{StaticResource ImgSmall}"
+                VerticalOptions="Start"
+                WidthRequest="25">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BtnBack_tapped" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Image
+                Grid.Row="1"
+                Aspect="AspectFit"
+                HeightRequest="200"
+                Source="imf_otp"
+                WidthRequest="250" />
+
+            <StackLayout Grid.Row="2">
+
+                <Label
+                    FontSize="22"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource lblBold}"
+                    Text="Verification" />
+
+                <Label
+                    FontSize="15"
+                    HorizontalTextAlignment="Center"
+                    LineHeight="1"
+                    Style="{StaticResource lblRegular}"
+                    Text="We have send a code to your email"
+                    TextColor="{StaticResource AppGray}" />
+                <Label
+                    x:Name="txtEmail"
+                    FontSize="15"
+                    HorizontalTextAlignment="Center"
+                    LineHeight="1"
+                    Style="{StaticResource lblRegular}"
+                    TextColor="{StaticResource AppBlack}" />
+            </StackLayout>
+
+            <Grid
+                Grid.Row="3"
+                Margin="0,15,0,0"
+                ColumnDefinitions="65,65,65,65"
+                ColumnSpacing="15"
+                HorizontalOptions="CenterAndExpand">
+                <Border
+                    Grid.Column="0"
+                    Padding="0,0"
+                    HeightRequest="65"
+                    Stroke="{StaticResource AppGray}"
+                    Style="{StaticResource ExtBorder}">
+                    <ext:BorderlessEntry
+                        x:Name="Otp1"
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Numeric"
+                        MaxLength="1"
+                        Style="{StaticResource extEntry}"
+                        TextChanged="OnOtpTextChanged" />
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    Padding="0,0"
+                    HeightRequest="65"
+                    Stroke="{StaticResource AppGray}"
+                    Style="{StaticResource ExtBorder}">
+                    <ext:BorderlessEntry
+                        x:Name="Otp2"
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Numeric"
+                        MaxLength="1"
+                        Style="{StaticResource extEntry}"
+                        TextChanged="OnOtpTextChanged" />
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    Padding="0,0"
+                    HeightRequest="65"
+                    Stroke="{StaticResource AppGray}"
+                    Style="{StaticResource ExtBorder}">
+                    <ext:BorderlessEntry
+                        x:Name="Otp3"
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Numeric"
+                        MaxLength="1"
+                        Style="{StaticResource extEntry}"
+                        TextChanged="OnOtpTextChanged" />
+                </Border>
+                <Border
+                    Grid.Column="3"
+                    Padding="0,0"
+                    HeightRequest="65"
+                    Stroke="{StaticResource AppGray}"
+                    Style="{StaticResource ExtBorder}">
+                    <ext:BorderlessEntry
+                        x:Name="Otp4"
+                        HorizontalTextAlignment="Center"
+                        Keyboard="Numeric"
+                        MaxLength="1"
+                        Style="{StaticResource extEntry}"
+                        TextChanged="OnOtpTextChanged" />
+                </Border>
+            </Grid>
+
+            <StackLayout
+                Grid.Row="4"
+                HorizontalOptions="Center"
+                Orientation="Horizontal"
+                Spacing="8">
+                <Label Style="{StaticResource lblRegular}" Text="Resend code in" />
+                <Label
+                    Style="{StaticResource lblRegular}"
+                    Text="6"
+                    TextColor="{StaticResource AppPrimary}" />
+                <Label
+                    FontSize="14"
+                    Style="{StaticResource lblRegular}"
+                    Text="s"
+                    VerticalTextAlignment="Center" />
+            </StackLayout>
+
+            <Button
+                x:Name="btnVerify"
+                Grid.Row="5"
+                Margin="0,30,0,0"
+                Clicked="BtnVerifyCode_Tapped"
+                Style="{StaticResource BtnPrimary}"
+                Text="Verify" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

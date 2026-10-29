@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="i_KimMobileClient.Views.NewOrderView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:i_KimMobileClient.Converter"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    <Grid Background="WhiteSmoke" RowDefinitions="Auto,*">
+        <!--  Header  -->
+        <Grid
+            Grid.Row="0"
+            Padding="15"
+            BackgroundColor="{StaticResource AppPrimary}"
+            ColumnDefinitions="Auto,*,Auto">
+
+            <Border
+                Grid.Column="0"
+                Padding="10"
+                Background="White"
+                HeightRequest="40"
+                StrokeShape="RoundRectangle 12"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                WidthRequest="40">
+                <Image
+                    x:Name="BtnBack"
+                    HeightRequest="22"
+                    HorizontalOptions="Center"
+                    Source="icon_menu"
+                    VerticalOptions="Center"
+                    WidthRequest="22">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                    </Image.Behaviors>
+                </Image>
+            </Border>
+
+            <VerticalStackLayout
+                Grid.Column="1"
+                Margin="14,0,0,0"
+                VerticalOptions="Center">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Categories"
+                    TextColor="White" />
+                <Label
+                    FontSize="13"
+                    Text="Choose A Category To Explore Products"
+                    TextColor="#FFE0C0" />
+            </VerticalStackLayout>
+
+            <Grid
+                Grid.Column="2"
+                HeightRequest="40"
+                VerticalOptions="Center"
+                WidthRequest="40">
+                <Border
+                    Background="White"
+                    HeightRequest="40"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 24"
+                    WidthRequest="40">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OpenCartItem_Tapped" />
+                    </Border.GestureRecognizers>
+                    <Image
+                        Aspect="AspectFit"
+                        HeightRequest="20"
+                        HorizontalOptions="Center"
+                        Source="icon_cart"
+                        VerticalOptions="Center"
+                        WidthRequest="20" />
+                </Border>
+
+                <!--  Badge  -->
+                <Border
+                    Padding="5,2"
+                    Background="#E53935"
+                    HorizontalOptions="End"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    TranslationX="6"
+                    TranslationY="-4"
+                    VerticalOptions="Start">
+                    <Label
+                        x:Name="lblCartItemCount"
+                        FontAttributes="Bold"
+                        FontSize="10"
+                        Text="0"
+                        TextColor="White" />
+                </Border>
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="1" RowDefinitions="*">
+            <RefreshView
+                x:Name="OrderRefreshView"
+                Grid.Row="0"
+                Margin="12,12,12,0"
+                Refreshing="OnRefreshing">
+                <!--  CATEGORY GRID (2 columns)  -->
+                <CollectionView
+                    x:Name="clsCategory"
+                    ItemsSource="{Binding mCategoryItem}"
+                    SelectionMode="None">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            HorizontalItemSpacing="10"
+                            Orientation="Vertical"
+                            Span="2"
+                            VerticalItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.Footer>
+                        <BoxView BackgroundColor="Transparent" HeightRequest="80" />
+                    </CollectionView.Footer>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Padding="0"
+                                Background="{Binding Index, Converter={conv:IndexToColorConverter}}"
+                                HeightRequest="190"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 18">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectCommand}" />
+                                </Border.GestureRecognizers>
+
+                                <Grid>
+
+                                    <!--  Title + product count, top-left  -->
+                                    <StackLayout
+                                        Margin="14,12,0,0"
+                                        HorizontalOptions="Start"
+                                        Spacing="2"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="15"
+                                            Text="{Binding Name}"
+                                            TextColor="{Binding TitleColor}" />
+                                        <Label
+                                            FontSize="11"
+                                            Style="{StaticResource lblsemiBold}"
+                                            Text="{Binding ProductCount, StringFormat='Product {0}'}"
+                                            TextColor="{Binding SubTextColor}" />
+                                    </StackLayout>
+
+                                    <!--  Product image, centered/bottom  -->
+                                    <!--  Source="{Binding Base64String, Converter={conv:Base64ToImageConverter}}"  -->
+                                    <!--    -->
+                                    <Image
+                                        Margin="0,0,0,4"
+                                        Aspect="AspectFill"
+                                        HeightRequest="130"
+                                        HorizontalOptions="Center"
+                                        Source="{Binding ImageSourceCached}"
+                                        VerticalOptions="End"
+                                        WidthRequest="130" />
+
+                                    <!--  Arrow button, bottom-right  -->
+                                    <Border
+                                        Margin="0,0,10,10"
+                                        Background="White"
+                                        HeightRequest="34"
+                                        HorizontalOptions="End"
+                                        Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 17"
+                                        VerticalOptions="End"
+                                        WidthRequest="34">
+                                        <Image
+                                            HeightRequest="18"
+                                            HorizontalOptions="Center"
+                                            Rotation="-90"
+                                            Source="icon_downarrow"
+                                            VerticalOptions="Center"
+                                            WidthRequest="18" />
+                                    </Border>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Category_Tapped" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+            <!--  SEARCH BAR + FILTER  -->
+            <Grid
+                Grid.Row="0"
+                Padding="16,0,16,8"
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="10"
+                VerticalOptions="EndAndExpand">
+
+                <Border
+                    Grid.Column="0"
+                    Padding="16,0"
+                    Background="White"
+                    HeightRequest="50"
+                    Stroke="#E0E0E0"
+                    StrokeShape="RoundRectangle 14"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <ext:BorderlessEntry
+                            Grid.Column="0"
+                            Background="Transparent"
+                            FontSize="14"
+                            Placeholder="Search Categories"
+                            PlaceholderColor="#9E9E9E"
+                            Text="{Binding SearchText}"
+                            TextChanged="txtSearch_TextChanged"
+                            TextColor="#1A1A1A"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Border
+                    Grid.Column="1"
+                    Background="White"
+                    HeightRequest="50"
+                    Stroke="#E0E0E0"
+                    StrokeShape="RoundRectangle 14"
+                    StrokeThickness="1"
+                    WidthRequest="50">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenFilterCommand}" />
+                    </Border.GestureRecognizers>
+                    <Image
+                        HeightRequest="18"
+                        HorizontalOptions="Center"
+                        Source="icon_search"
+                        VerticalOptions="Center"
+                        WidthRequest="18" />
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentView>

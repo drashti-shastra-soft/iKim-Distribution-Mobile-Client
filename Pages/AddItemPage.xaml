@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="i_KimMobileClient.Pages.AddItemPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    NavigationPage.HasNavigationBar="False">
+    <Grid BackgroundColor="WhiteSmoke" RowDefinitions="Auto,*,Auto">
+        <!--  Header  -->
+        <Grid
+            Grid.Row="0"
+            Padding="15"
+            BackgroundColor="{StaticResource AppPrimary}"
+            ColumnDefinitions="Auto,*"
+            ColumnSpacing="10">
+
+            <Border
+                Grid.Column="0"
+                Padding="10"
+                Background="White"
+                HeightRequest="40"
+                StrokeShape="RoundRectangle 12"
+                StrokeThickness="0"
+                VerticalOptions="Center"
+                WidthRequest="40">
+                <Image
+                    HeightRequest="22"
+                    HorizontalOptions="Center"
+                    Source="icon_back"
+                    VerticalOptions="Center"
+                    WidthRequest="22">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                    </Image.Behaviors>
+                </Image>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BdrBack_Tapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <Border
+                Grid.Column="1"
+                Padding="0,0,10,0"
+                HeightRequest="40"
+                Stroke="LightGray"
+                Style="{StaticResource ExtBorder}">
+                <Grid ColumnDefinitions="*,Auto">
+                    <ext:BorderlessEntry
+                        x:Name="EntryConfirmPassword"
+                        Margin="10,0,0,0"
+                        Keyboard="Default"
+                        Placeholder="Search"
+                        Style="{StaticResource extEntry}" />
+                    <Image
+                        x:Name="IconConfirmPassword"
+                        Grid.Column="1"
+                        Aspect="AspectFit"
+                        Source="icon_search"
+                        Style="{StaticResource ImgSmall}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ImgSearch_Tapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                </Grid>
+            </Border>
+        </Grid>
+
+        <CollectionView
+            x:Name="clsItems"
+            Grid.Row="1"
+            Margin="15">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Margin="0,0,0,10"
+                        Padding="15,10"
+                        Background="{StaticResource White}"
+                        Stroke="{StaticResource AppGray}"
+                        StrokeShape="{RoundRectangle CornerRadius=10}"
+                        StrokeThickness="0.5"
+                        VerticalOptions="StartAndExpand">
+                        <Border.Shadow>
+                            <Shadow
+                                Brush="White"
+                                Opacity="0.08"
+                                Radius="10"
+                                Offset="0,-3" />
+                        </Border.Shadow>
+                        <Grid
+                            ColumnDefinitions="Auto,*,Auto"
+                            ColumnSpacing="10"
+                            RowDefinitions="Auto,Auto">
+                            <Border
+                                Grid.RowSpan="2"
+                                Grid.Column="0"
+                                Padding="0"
+                                Background="#FEEFE1"
+                                HeightRequest="50"
+                                StrokeShape="{RoundRectangle CornerRadius=20}"
+                                WidthRequest="50">
+                                <Image
+                                    Aspect="AspectFit"
+                                    HeightRequest="40"
+                                    Source="icon_ice_cream"
+                                    VerticalOptions="CenterAndExpand"
+                                    WidthRequest="40" />
+                            </Border>
+
+                            <StackLayout Grid.Row="0" Grid.Column="1">
+                                <Label
+                                    FontSize="12"
+                                    Text="Pistachio Scoops"
+                                    TextColor="{StaticResource AppBlack}" />
+                                <Label
+                                    FontSize="11"
+                                    Text="Pistachio Scoops"
+                                    TextColor="Blue" />
+                            </StackLayout>
+
+                            <StackLayout Grid.Row="1" Grid.Column="1">
+                                <Label
+                                    FontSize="12"
+                                    Text="Instock"
+                                    TextColor="{StaticResource AppBlack}" />
+                                <Label
+                                    FontSize="11"
+                                    Text="10000 pics"
+                                    TextColor="Blue" />
+                            </StackLayout>
+
+                            <Border
+                                Grid.RowSpan="2"
+                                Grid.Column="2"
+                                Padding="15,8"
+                                Background="{StaticResource AppPrimary}"
+                                StrokeShape="{RoundRectangle CornerRadius=10}"
+                                VerticalOptions="CenterAndExpand">
+                                <Label
+                                    FontSize="12"
+                                    Style="{StaticResource lblsemiBold}"
+                                    Text="Add"
+                                    TextColor="{StaticResource White}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button
+            Grid.Row="2"
+            Margin="15,0,15,15"
+            Style="{StaticResource BtnPrimary}"
+            Text="Submit" />
+
+        <ext:CustomLoaderView
+            x:Name="loaderView"
+            Grid.RowSpan="3"
+            IsVisible="False" />
+    </Grid>
+</ContentPage>

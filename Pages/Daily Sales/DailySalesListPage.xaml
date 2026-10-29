@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    x:Class="i_KimMobileClient.Pages.Daily_Sales.DailySalesListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    NavigationPage.HasNavigationBar="False">
+    <RefreshView
+        x:Name="SalesRefreshView"
+        Grid.Row="1"
+        Command="{Binding RefreshCommand}"
+        RefreshColor="#FF6B00"
+         Refreshing="OnRefreshing">
+        <Grid RowDefinitions="Auto,*">
+
+            <!--  Header  -->
+            <Grid
+                Grid.Row="0"
+                Padding="16,10,16,14"
+                BackgroundColor="{StaticResource AppPrimary}"
+                RowDefinitions="Auto,Auto">
+
+                <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+
+                    <Border
+                        x:Name="BdrBtnBack"
+                        Grid.Column="0"
+                        Padding="10"
+                        Background="White"
+                        HeightRequest="40"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        VerticalOptions="Center"
+                        WidthRequest="40">
+                        <Image
+                            x:Name="BtnBack"
+                            HeightRequest="20"
+                            HorizontalOptions="Center"
+                            Source="back"
+                            VerticalOptions="Center"
+                            WidthRequest="22">
+                            <Image.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="#1A1A1A" />
+                            </Image.Behaviors>
+                        </Image>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBackTapped" />
+                        </Border.GestureRecognizers>
+                    </Border>
+
+
+
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Margin="14,0"
+                        VerticalOptions="Center">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Text="Daily Sales List"
+                            TextColor="White" />
+                        <!--<Label
+                            FontSize="13"
+                            Text="21 July - 30 July 2026"
+                            TextColor="#FFE0C0" />-->
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+
+
+            <!-- Daily  Sales List  -->
+            <CollectionView
+                x:Name="clsDailySalesList"
+                Grid.Row="1"
+                Background="#F7F8FA"
+                VerticalScrollBarVisibility="Never">
+                <CollectionView.Header>
+                    <BoxView BackgroundColor="Transparent" HeightRequest="10" />
+                </CollectionView.Header>
+                <CollectionView.Footer>
+                    <BoxView BackgroundColor="Transparent" HeightRequest="50" />
+                </CollectionView.Footer>
+
+                <!--Empty State-->
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout
+                        Padding="40,60"
+                        HorizontalOptions="Center"
+                        Spacing="12"
+                        VerticalOptions="Center">
+                        <Border
+                            Background="#FFF3E0"
+                            HeightRequest="72"
+                            HorizontalOptions="Center"
+                            StrokeShape="RoundRectangle 36"
+                            StrokeThickness="0"
+                            WidthRequest="72">
+                            <Image
+                                HeightRequest="36"
+                                HorizontalOptions="Center"
+                                Source="icon_date"
+                                VerticalOptions="Center"
+                                WidthRequest="36">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="#FF6B00" />
+                                </Image.Behaviors>
+                            </Image>
+                        </Border>
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            Style="{StaticResource lblsemiBold}"
+                            Text="No Daily Sales Found"
+                            TextColor="#1A1A1A" />
+
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Border
+                            Grid.Row="1"
+                            Margin="16,10,16,10"
+                            Padding="0"
+                            Background="White"
+                            Stroke="#EFEFEF"
+                            StrokeShape="RoundRectangle 12"
+                            StrokeThickness="1">
+                            <Border.Shadow>
+                                <Shadow
+                                    Brush="Black"
+                                    Opacity="0.05"
+                                    Radius="8"
+                                    Offset="0,2" />
+                            </Border.Shadow>
+                            <VerticalStackLayout Padding="15" Spacing="10">
+                                <HorizontalStackLayout HorizontalOptions="Start" Spacing="5">
+                                    <Border
+                                        Background="{StaticResource AppPrimary}"
+                                        HeightRequest="25"
+                                        HorizontalOptions="Center"
+                                        StrokeShape="{RoundRectangle CornerRadius=25}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="25">
+                                        <Image
+                                            Aspect="AspectFit"
+                                            HeightRequest="15"
+                                            Source="icon_date_white"
+                                            WidthRequest="20" />
+                                    </Border>
+                                    <Label
+                                        Text="{Binding SalesDate}"
+                                        FontSize="13"
+                                        TextColor="#161616"
+                                        Style="{StaticResource lblBold2}"
+                                        VerticalOptions="Center"/>
+                                    <Label 
+                                        Text="{Binding SalesDay}"
+                                        FontSize="13"
+                                        TextColor="{StaticResource AppGray}"
+                                        Style="{StaticResource lblsemiBold}"
+                                        VerticalOptions="Center"/>
+
+                                </HorizontalStackLayout>
+
+                                <Grid ColumnDefinitions="*,Auto,*">
+                                    <VerticalStackLayout HorizontalOptions="Center">
+                                        <Label 
+                                            Text="Cash"
+                                            TextColor="{StaticResource AppGray}"
+                                            HorizontalTextAlignment="Center"
+                                            Style="{StaticResource lblRegular}"
+                                            FontSize="14"/>
+
+                                        <Label 
+                                            Text="{Binding CashFormatted}"
+                                            TextColor="#1EBB6A"
+                                            Style="{StaticResource lblBold2}"
+                                            FontSize="14"/>
+                                    </VerticalStackLayout>
+
+                                    <!-- Divider BoxView -->
+                                    <BoxView
+                                        Grid.Column="1"
+                                        WidthRequest="2"
+                                        HeightRequest="40"
+                                        BackgroundColor="#F0F0F0"
+                                        VerticalOptions="Center"/>
+
+                                    <VerticalStackLayout 
+                                        Grid.Column="2"
+                                        HorizontalOptions="Center">
+                                        <Label 
+                                            Text="Online"
+                                            TextColor="{StaticResource AppGray}"
+                                            HorizontalTextAlignment="Center"
+                                            Style="{StaticResource lblRegular}"
+                                            FontSize="14"/>
+
+                                        <Label 
+                                            Text="{Binding OnlineFormatted}"
+                                            TextColor="#2EA6FE"
+                                            Style="{StaticResource lblBold2}"
+                                            FontSize="14"/>
+                                    </VerticalStackLayout>
+                                </Grid>
+                                <BoxView 
+                                    HeightRequest="1"
+                                    BackgroundColor="#F0F0F0"/>
+                                <Grid 
+                                    ColumnDefinitions="*,Auto">
+
+                                    <Label 
+                                        VerticalOptions="Center"
+                                        Text="Total Collection"
+                                        TextColor="{StaticResource AppGray}"
+                                        FontSize="16"
+                                        Style="{StaticResource lblsemiBold}"/>
+                                    <Border 
+                                        VerticalOptions="Center"
+                                        Grid.Column="1"
+                                        Background="{StaticResource AppOrange}"
+                                        Padding="10,0"
+                                        StrokeShape="RoundRectangle 5">
+
+                                        <Label 
+                                            Text="{Binding TotalFormatted}"
+                                            TextColor="White"
+                                            Style="{StaticResource lblBold2}"
+                                            FontSize="14"/>
+                                    </Border>
+                                </Grid>
+
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+
+            <Border
+                x:Name="BdrAddBtn"
+                Grid.Row="1"
+                Margin="0,0,15,15"
+                Background="{StaticResource AppPrimary}"
+                HeightRequest="50"
+                HorizontalOptions="End"
+                StrokeShape="{RoundRectangle CornerRadius=25}"
+                VerticalOptions="End"
+                WidthRequest="50">
+                <Image
+                    Aspect="AspectFit"
+                    HeightRequest="20"
+                    Source="icon_plus_white"
+                    WidthRequest="20" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="BdrAddDailySales_Tapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <ext:CustomLoaderView
+                x:Name="loaderView"
+                Grid.RowSpan="2"
+                IsVisible="False" />
+        </Grid>
+    </RefreshView>
+</ContentPage>

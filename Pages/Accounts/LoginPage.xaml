@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="i_KimMobileClient.Pages.Accounts.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ext="clr-namespace:i_KimMobileClient.CustomeControls"
+    BackgroundColor="#F5F5F5"
+    NavigationPage.HasNavigationBar="False">
+    <Grid BackgroundColor="#F5F5F5">
+        <Image Aspect="AspectFit" Source="img_bg" />
+
+        <Grid Padding="15,10" RowDefinitions="30,Auto,20,*">
+            <Image
+                Grid.Row="1"
+                Aspect="AspectFit"
+                HeightRequest="140"
+                HorizontalOptions="Center"
+                Source="ikim_appicon"
+                VerticalOptions="Center"
+                WidthRequest="140" />
+
+            <StackLayout Grid.Row="3" Spacing="15">
+                <StackLayout Spacing="0">
+                    <!--  Title  -->
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="segoeuiBold"
+                        FontSize="22"
+                        HorizontalOptions="Center"
+                        Text="Login"
+                        TextColor="#000000" />
+                    <Label
+                        FontSize="{OnIdiom Phone=14,
+                                           Tablet=20}"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="Sign in to start your session"
+                        TextColor="#979797" />
+                </StackLayout>
+
+                <!--  Email  -->
+                <StackLayout Spacing="5">
+                    <Label
+                        FontFamily="segoeuiSemibold"
+                        FontSize="14"
+                        Style="{StaticResource lblsemiBold}"
+                        Text="Email"
+                        TextColor="#000000" />
+
+                    <Border Padding="0,0,10,0" Style="{StaticResource ExtBorder}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <ext:BorderlessEntry
+                                x:Name="txtEmail"
+                                Keyboard="Email"
+                                Placeholder="abc@gmail.com"
+                                Style="{StaticResource extEntry}" />
+                            <Image
+                                Grid.Column="1"
+                                Source="icon_mail"
+                                WidthRequest="20" />
+                        </Grid>
+                    </Border>
+                </StackLayout>
+
+                <!--  Password  -->
+                <StackLayout Spacing="5">
+                    <Label
+                        FontFamily="segoeuiSemibold"
+                        FontSize="14"
+                        Style="{StaticResource lblBold}"
+                        Text="Password"
+                        TextColor="{StaticResource AppBlack}" />
+
+                    <Border
+                        Margin="0"
+                        Padding="0,0,10,0"
+                        Style="{StaticResource ExtBorder}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <ext:BorderlessEntry
+                                x:Name="TxtPassword"
+                                IsPassword="True"
+                                Placeholder="*****"
+                                Style="{StaticResource extEntry}" />
+                            <Image
+                                x:Name="ImgEye"
+                                Grid.Column="1"
+                                Source="icon_hide"
+                                WidthRequest="20">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ImgIsPasswordShow_Tapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+                    </Border>
+                </StackLayout>
+
+                <!--  Remember + Forgot  -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="0">
+                    <StackLayout
+                        Margin="0"
+                        Padding="0"
+                        HorizontalOptions="Start"
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <Image
+                            x:Name="imgCheckBox"
+                            Margin="0"
+                            HeightRequest="20"
+                            Source="uncheck"
+                            VerticalOptions="Center"
+                            WidthRequest="20" />
+                        <Label
+                            FontSize="15"
+                            HorizontalOptions="Start"
+                            Text="Remember me"
+                            TextColor="#000000"
+                            VerticalOptions="Center" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="StkRememberMe_Tapped" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+
+                    <Label
+                        x:Name="LblForgotPassword"
+                        Grid.Column="1"
+                        FontSize="15"
+                        Style="{StaticResource lblBold}"
+                        Text="Forgot Password?"
+                        TextColor="{StaticResource AppPrimary}"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="LblForgotPassword_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+
+                <!--  Login Button  -->
+                <Button
+                    Margin="0,30,0,0"
+                    Clicked="BtnLogin_Clicked"
+                    Style="{StaticResource BtnPrimary}"
+                    Text="Login" />
+
+            </StackLayout>
+        </Grid>
+
+        <ext:CustomLoaderView
+            x:Name="loaderView"
+            Grid.RowSpan="10"
+            Grid.ColumnSpan="2"
+            IsVisible="False" />
+    </Grid>
+
+</ContentPage>
